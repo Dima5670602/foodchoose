@@ -79,7 +79,7 @@ async function initDB() {
 initDB();
 
 // ─── JWT Secret ───────────────────────────────────────────────────
-const JWT_SECRET = process.env.JWT_SECRET || 'foodchoose_secret_2024_!@#';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // ─── Email Transporter ────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
@@ -158,9 +158,8 @@ app.post('/api/auth/login', async (req, res) => {
   const { employeeId, password } = req.body;
   if (!employeeId || !password) return res.status(400).json({ error: 'Champs requis' });
 
-  // Admin hardcoded
-  const adminUser = process.env.ADMIN_USER || 'admin';
-  const adminPass = process.env.ADMIN_PASSWORD || '@admin123';
+  const adminUser = process.env.ADMIN_USER;
+  const adminPass = process.env.ADMIN_PASSWORD;
 
   if (employeeId === adminUser && password === adminPass) {
     const token = jwt.sign({ id: 0, employeeId: 'admin', role: 'admin', name: 'Administrateur' }, JWT_SECRET, { expiresIn: '8h' });
@@ -209,7 +208,7 @@ app.post('/api/admin/employees', adminMiddleware, async (req, res) => {
   const { firstName, lastName, email, employeeId } = req.body;
   if (!firstName || !lastName || !email || !employeeId) return res.status(400).json({ error: 'Champs requis' });
 
-  const defaultPassword = 'Elimmeka123';
+  const defaultPassword = process.env.DEFAULT_EMPLOYEE_PASSWORD;
   try {
     const hash = await bcrypt.hash(defaultPassword, 10);
     const result = await pool.query(

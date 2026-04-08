@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node:*)",
+      "Bash(psql --version)",
+      "Bash(pg_isready)",
+      "Bash(psql -U postgres -c \"\\\\l\")",
+      "Bash(psql -U hp -c \"\\\\l\")",
+      "Bash(PGPASSWORD=admin psql -U postgres -c \"\\\\l\")",
+      "Bash(net user:*)",
+      "Bash(psql -U postgres -h 127.0.0.1 -W)",
+      "Read(//c/Users/hp/AppData/Roaming/pgAdmin/**)",
+      "Read(//c/Users/hp/AppData/Local/pgAdmin/**)",
+      "Bash(PGPASSWORD=admin psql -U postgres -h 127.0.0.1 -p 5432 -c \"SELECT version\\(\\);\" 2>&1)",
+      "Bash(sqlite3 pgadmin4.db \"SELECT s.name, s.host, s.port, s.username FROM server s LIMIT 10;\")",
+      "Bash(pg_ctl reload:*)",
+      "Bash(net stop:*)",
+      "Bash(net start:*)",
+      "Bash(powershell -Command \"Restart-Service postgresql-x64-16\")",
+      "Bash(powershell -Command \"Get-Service *postgres*\")",
+      "Bash(netstat -ano)",
+      "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 5432 | Select-Object LocalAddress, LocalPort, State, OwningProcess\")",
+      "Bash(powershell -Command \"Get-Process -Id 5948 | Select-Object ProcessName, Path\" 2>&1)",
+      "Bash(powershell -Command \"\\(Get-Process -Id 5948\\).Path\" 2>&1)",
+      "Bash(powershell -Command \"\n\\\\$proc = Get-WmiObject Win32_Process -Filter 'ProcessId=5948'\n\\\\$proc | Select-Object Name, ExecutablePath, CommandLine\n\" 2>&1)",
+      "Bash(powershell -Command \"\n\\\\$handle = [System.Diagnostics.Process]::GetProcessById\\(5948\\)\n\\\\$handle.MainModule.FileName\n\" 2>&1)",
+      "Bash(psql:*)",
+      "Bash(PGPASSWORD=foodchoose2024 psql -U postgres -h 127.0.0.1 -p 5432 -c \"SELECT pg_reload_conf\\(\\);\" 2>&1)",
+      "Bash(PGPASSWORD=foodchoose2024 psql -U postgres -h 127.0.0.1 -p 5432 -d foodchoose -c \"SELECT version\\(\\);\" 2>&1)",
+      "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3100 | Select OwningProcess\" 2>&1)",
+      "Bash(powershell -Command \"Stop-Process -Id 12840 -Force\" 2>&1)",
+      "Bash(powershell -Command \"Stop-Process -Id 16640 -Force\" 2>&1)",
+      "Bash(powershell -Command \"\n\\\\$pids = \\(Get-NetTCPConnection -LocalPort 3100 -ErrorAction SilentlyContinue\\).OwningProcess | Sort-Object -Unique\nforeach\\(\\\\$pid in \\\\$pids\\) { \n  Write-Host \\\\\"Arrêt PID: \\\\$pid\\\\\"\n  Stop-Process -Id \\\\$pid -Force -ErrorAction SilentlyContinue \n}\n\" 2>&1)",
+      "Bash(powershell -Command \"\n\\\\$procs = \\(Get-NetTCPConnection -LocalPort 3100 -ErrorAction SilentlyContinue\\).OwningProcess | Sort-Object -Unique\nforeach\\(\\\\$p in \\\\$procs\\) { Write-Host \\\\\"Arrêt: \\\\$p\\\\\"; Stop-Process -Id \\\\$p -Force -ErrorAction SilentlyContinue }\n\" 2>&1)",
+      "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3100 -ErrorAction SilentlyContinue\")",
+      "Bash(PGPASSWORD=\"Hz3256mobile#\" psql -U postgres -h localhost -p 5433 -c \"CREATE DATABASE foodchoose;\" 2>&1)",
+      "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3100 -ErrorAction SilentlyContinue | Select-Object LocalAddress, LocalPort, State, OwningProcess\" 2>&1)",
+      "Bash(powershell -Command \"Stop-Process -Id 19600 -Force\")"
+    ]
+  }
+}

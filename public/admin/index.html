@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodChoose — Administration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #E85A2A; --brown: #2C1810; --gold: #F9C74F;
+      --cream: #FFF8F3; --muted: #8B6554; --text: #1A1209;
+      --border: #F0E6DE; --success: #16a34a; --danger: #dc2626;
+      --sidebar-w: 240px;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: #F5EDE6; color: var(--text); display: flex; min-height: 100vh; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w); background: var(--brown); min-height: 100vh;
+      position: fixed; left: 0; top: 0; z-index: 100;
+      display: flex; flex-direction: column;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+    }
+    .sidebar-logo {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid rgba(255,248,243,0.08);
+    }
+    .sidebar-logo .logo-icon { font-size: 28px; margin-bottom: 6px; display: block; }
+    .sidebar-logo .logo-name {
+      font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900;
+      color: var(--cream); letter-spacing: -0.3px;
+    }
+    .sidebar-logo .logo-name span { color: var(--orange); }
+    .sidebar-logo .admin-badge {
+      display: inline-block; background: var(--orange); color: white;
+      font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px;
+      text-transform: uppercase; letter-spacing: 0.8px; margin-top: 6px;
+    }
+    .sidebar-nav { flex: 1; padding: 16px 0; }
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 24px; cursor: pointer;
+      color: rgba(255,248,243,0.55); font-size: 14px; font-weight: 500;
+      transition: all 0.2s; border-left: 3px solid transparent;
+      user-select: none;
+    }
+    .nav-item .icon { font-size: 18px; width: 22px; text-align: center; }
+    .nav-item:hover { color: var(--cream); background: rgba(255,248,243,0.05); }
+    .nav-item.active { color: var(--cream); background: rgba(232,90,42,0.15); border-left-color: var(--orange); }
+    .nav-section {
+      padding: 16px 24px 8px; font-size: 10px; font-weight: 600;
+      color: rgba(255,248,243,0.25); text-transform: uppercase; letter-spacing: 1.2px;
+    }
+    .sidebar-footer {
+      padding: 16px 24px; border-top: 1px solid rgba(255,248,243,0.08);
+    }
+    .user-info { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .user-avatar {
+      width: 36px; height: 36px; background: var(--orange); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: white;
+    }
+    .user-name { font-size: 13px; font-weight: 600; color: var(--cream); }
+    .user-role { font-size: 11px; color: var(--muted); }
+    .btn-logout {
+      width: 100%; padding: 9px; background: rgba(232,90,42,0.15);
+      border: 1px solid rgba(232,90,42,0.3); color: var(--orange);
+      border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500;
+      font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+    }
+    .btn-logout:hover { background: rgba(232,90,42,0.25); }
+
+    /* MAIN */
+    .main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
+    .topbar {
+      background: var(--cream); padding: 20px 32px; display: flex;
+      align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50;
+    }
+    .topbar-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--brown); }
+    .topbar-date { font-size: 13px; color: var(--muted); }
+    .content { padding: 28px 32px; }
+
+    /* PAGE VISIBILITY */
+    .page { display: none; }
+    .page.active { display: block; animation: pageIn 0.3s ease both; }
+    @keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* STATS GRID */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+    .stat-card {
+      background: var(--cream); border-radius: 16px; padding: 22px;
+      border: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .stat-card::after {
+      content: ''; position: absolute; top: -20px; right: -20px;
+      width: 80px; height: 80px; border-radius: 50%;
+      background: rgba(232,90,42,0.07);
+    }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--brown); line-height: 1; }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 6px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-icon { font-size: 24px; margin-bottom: 10px; }
+
+    /* CARDS */
+    .card {
+      background: var(--cream); border-radius: 16px;
+      border: 1px solid var(--border); overflow: hidden; margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 20px 24px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-title { font-size: 15px; font-weight: 600; color: var(--brown); }
+    .card-body { padding: 20px 24px; }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th {
+      text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600;
+      color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px;
+      background: #F9F1EB; border-bottom: 1px solid var(--border);
+    }
+    td { padding: 13px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(232,90,42,0.03); }
+    .empty-state { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
+    .empty-state .icon { font-size: 36px; margin-bottom: 10px; display: block; }
+
+    /* BADGES */
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+    }
+    .badge-pending { background: #FEF3C7; color: #92400E; }
+    .badge-validated { background: #D1FAE5; color: #065F46; }
+    .badge-lipton { background: #DBEAFE; color: #1E40AF; }
+    .badge-nescafe { background: #FEF9C3; color: #713F12; }
+    .badge-both { background: #F3E8FF; color: #6B21A8; }
+
+    /* BUTTONS */
+    .btn {
+      padding: 9px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
+      font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary { background: var(--orange); color: white; }
+    .btn-primary:hover { background: #D14D22; transform: translateY(-1px); }
+    .btn-success { background: #16a34a; color: white; }
+    .btn-success:hover { background: #15803d; }
+    .btn-danger { background: #dc2626; color: white; }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-outline {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+    /* FORMS */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-control {
+      width: 100%; padding: 11px 14px; background: white; border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif;
+      color: var(--text); transition: all 0.2s; outline: none;
+    }
+    .form-control:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(232,90,42,0.1); }
+    .form-control::placeholder { color: #C4A898; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(44,24,16,0.6);
+      z-index: 200; display: none; align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .modal {
+      background: var(--cream); border-radius: 20px; padding: 32px;
+      width: 100%; max-width: 480px; margin: 20px;
+      animation: modalIn 0.3s cubic-bezier(0.16,1,0.3,1) both;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+    }
+    @keyframes modalIn { from { opacity: 0; transform: scale(0.92) translateY(16px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .modal-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--brown); margin-bottom: 24px; }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+
+    /* PREFERENCE BARS */
+    .pref-bar-wrap { margin-bottom: 16px; }
+    .pref-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+    .pref-bar-bg { background: var(--border); border-radius: 8px; height: 10px; overflow: hidden; }
+    .pref-bar-fill { height: 100%; border-radius: 8px; transition: width 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .fill-lipton { background: #3B82F6; }
+    .fill-nescafe { background: #F59E0B; }
+    .fill-both { background: #8B5CF6; }
+    /* Toggle disponibilité menu */
+    .toggle-avail { cursor:pointer; width:36px; height:20px; background:#e5e7eb; border-radius:20px; position:relative; display:inline-block; transition:background 0.2s; border:none; }
+    .toggle-avail.on { background:#16a34a; }
+    .toggle-avail::after { content:''; position:absolute; top:2px; left:2px; width:16px; height:16px; background:white; border-radius:50%; transition:left 0.2s; }
+    .toggle-avail.on::after { left:18px; }
+
+    /* DATE PICKER */
+    .date-filter { display: flex; align-items: center; gap: 10px; }
+    .date-filter input[type=date] {
+      padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text);
+      background: white; outline: none; cursor: pointer;
+    }
+    .date-filter input[type=date]:focus { border-color: var(--orange); }
+
+    /* TOAST */
+    .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+    .toast {
+      background: var(--brown); color: var(--cream); padding: 14px 20px;
+      border-radius: 12px; font-size: 14px; max-width: 320px;
+      animation: toastIn 0.3s ease both;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .toast.success { border-left: 4px solid #16a34a; }
+    .toast.error { border-left: 4px solid #dc2626; }
+    .toast.info { border-left: 4px solid var(--orange); }
+    @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+    /* LAYOUT GRIDS (classes instead of inline for responsive control) */
+    .dash-grid    { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .menus-layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+    .emp-layout   { display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start; }
+    .pref-grid    { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+    /* HAMBURGER (hidden on desktop) */
+    .hamburger {
+      display: none; align-items: center; justify-content: center;
+      width: 40px; height: 40px; background: var(--brown); border: none;
+      border-radius: 10px; cursor: pointer; font-size: 20px; color: var(--cream);
+      flex-shrink: 0;
+    }
+    /* SIDEBAR OVERLAY */
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5); z-index: 90;
+      backdrop-filter: blur(2px);
+    }
+
+    /* ═══════════ RESPONSIVE ═══════════ */
+    @media (max-width: 900px) {
+      /* Sidebar : masquée par défaut, glisse à l'ouverture */
+      .sidebar { transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-overlay.open { display: block; }
+      .main { margin-left: 0; }
+      .hamburger { display: flex; }
+      .topbar { padding: 14px 16px; gap: 12px; }
+      .topbar-title { font-size: 18px; }
+      .topbar-date { font-size: 11px; }
+      .content { padding: 14px 12px; }
+
+      /* Stats : 2 colonnes */
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+      .stat-number { font-size: 28px; }
+
+      /* Grids → colonne unique */
+      .dash-grid, .menus-layout, .emp-layout, .pref-grid { grid-template-columns: 1fr; }
+
+      /* Cards */
+      .card-header { padding: 14px 16px; flex-wrap: wrap; gap: 8px; }
+      .card-body { padding: 14px 16px; }
+      .card { margin-bottom: 16px; }
+
+      /* Boutons dans les cartes header */
+      .card-header .btn { font-size: 12px; padding: 6px 10px; }
+
+      /* Formulaire */
+      .form-row { grid-template-columns: 1fr; }
+
+      /* Table */
+      th, td { padding: 10px 10px; font-size: 12px; }
+
+      /* Toast */
+      .toast-container { top: auto; bottom: 16px; right: 12px; left: 12px; }
+      .toast { max-width: 100%; font-size: 13px; }
+
+      /* Modal */
+      .modal { margin: 12px; padding: 24px 20px; }
+
+      /* Validate buttons */
+      .btn-validate-row { flex-direction: column; }
+      .btn-validate-row .btn { width: 100%; justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      /* Stats : 2 colonnes compactes */
+      .stats-grid { gap: 8px; }
+      .stat-card { padding: 14px; }
+      .stat-number { font-size: 24px; }
+      .stat-icon { font-size: 20px; margin-bottom: 6px; }
+
+      /* Topbar très compact */
+      .topbar-date { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">🍽</span>
+    <div class="logo-name">Food<span>Choose</span></div>
+    <span class="admin-badge">Admin</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" data-page="dashboard"><span class="icon">📊</span> Tableau de bord</div>
+    <div class="nav-item" data-page="orders"><span class="icon">🗒</span> Commandes du jour</div>
+    <div class="nav-item" data-page="validate"><span class="icon">✅</span> Valider & Exporter</div>
+    <div class="nav-section">Gestion</div>
+    <div class="nav-item" data-page="menus"><span class="icon">🍜</span> Gestion des menus</div>
+    <div class="nav-item" data-page="employees"><span class="icon">👥</span> Employés</div>
+    <div class="nav-section">Données</div>
+    <div class="nav-item" data-page="preferences"><span class="icon">☕</span> Préférences boissons</div>
+    <div class="nav-item" data-page="history"><span class="icon">📅</span> Historique</div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <div class="user-avatar">A</div>
+      <div>
+        <div class="user-name">Administrateur</div>
+        <div class="user-role">Chargé(e) de commande</div>
+      </div>
+    </div>
+    <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+  <div class="topbar">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <div style="flex:1">
+      <div class="topbar-title" id="pageTitle">Tableau de bord</div>
+    </div>
+    <div class="topbar-date" id="topbarDate"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-number" id="s-emp">—</div><div class="stat-label">Employés</div></div>
+        <div class="stat-card"><div class="stat-icon">🍜</div><div class="stat-number" id="s-menus">—</div><div class="stat-label">Menus aujourd'hui</div></div>
+        <div class="stat-card"><div class="stat-icon">🗒</div><div class="stat-number" id="s-orders">—</div><div class="stat-label">Commandes aujourd'hui</div></div>
+        <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-number" id="s-pending">—</div><div class="stat-label">En attente</div></div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Commandes du jour</span></div>
+          <div class="card-body" id="dashOrdersList">
+            <div class="empty-state"><span class="icon">🗒</span>Chargement...</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Préférences boissons</span></div>
+          <div class="card-body" id="dashPrefBars">
+            <div class="empty-state"><span class="icon">☕</span>Chargement...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ ORDERS ═══ -->
+    <div class="page" id="page-orders">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Commandes des employés</span>
+          <div class="date-filter">
+            <label style="font-size:12px;color:var(--muted)">Date :</label>
+            <input type="date" id="ordersDateFilter" onchange="loadOrders()">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Employé</th><th>ID</th><th>Menu choisi</th><th>Statut</th><th>Heure</th></tr></thead>
+              <tbody id="ordersTableBody">
+                <tr><td colspan="5" class="empty-state">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VALIDATE & EXPORT ═══ -->
+    <div class="page" id="page-validate">
+      <div class="card" style="max-width:600px">
+        <div class="card-header"><span class="card-title">Validation et export PDF</span></div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>Date de la commande</label>
+            <input type="date" class="form-control" id="validateDate" style="max-width:200px">
+          </div>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6">
+            Validez les commandes pour une journée donnée, puis téléchargez le récapitulatif en PDF.
+          </p>
+          <div id="validateSummary" style="background:#F9F1EB;border-radius:12px;padding:16px;margin-bottom:20px;font-size:14px;color:var(--brown)"></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap" class="btn-validate-row">
+            <button class="btn btn-success" onclick="validateOrders()">✅ Valider les commandes</button>
+            <button class="btn btn-primary" onclick="exportPDF()">📄 Télécharger PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ MENUS ═══ -->
+    <div class="page" id="page-menus">
+      <div class="menus-layout">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Liste des menus</span>
+          </div>
+          <div class="card-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Nom du menu</th><th>Description</th><th>Disponible</th><th>Action</th></tr></thead>
+                <tbody id="menusTableBody">
+                  <tr><td colspan="4" class="empty-state">Chargement...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Ajouter un menu</span></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Nom du menu *</label>
+              <input class="form-control" id="menuName" placeholder="Ex: Riz sauce graine">
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea class="form-control" id="menuDesc" rows="3" placeholder="Détails optionnels..."></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="addMenu()" style="width:100%">➕ Ajouter le menu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ EMPLOYEES ═══ -->
+    <div class="page" id="page-employees">
+      <div class="emp-layout">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Liste des employés</span>
+            <span id="empCount" style="font-size:13px;color:var(--muted)"></span>
+          </div>
+          <div class="card-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Nom complet</th><th>Identifiant</th><th>Email</th><th>Boisson</th><th>Action</th></tr></thead>
+                <tbody id="empTableBody">
+                  <tr><td colspan="5" class="empty-state">Chargement...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Créer un compte employé</span></div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Prénom *</label>
+                <input class="form-control" id="empFirst" placeholder="Jean" oninput="suggestEmpId()">
+              </div>
+              <div class="form-group">
+                <label>Nom *</label>
+                <input class="form-control" id="empLast" placeholder="Dupont" oninput="suggestEmpId()">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email *</label>
+              <input class="form-control" id="empEmail" type="email" placeholder="jean.dupont@entreprise.com">
+            </div>
+            <div class="form-group">
+              <label>Identifiant proposé</label>
+              <input class="form-control" id="empId" placeholder="jdupont">
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">Modifiable — prénom+nom par défaut</div>
+            </div>
+            <div class="form-group" style="background:#F9F1EB;border-radius:10px;padding:12px;font-size:13px;color:var(--muted)">
+              🔑 Mot de passe par défaut : <strong style="color:var(--brown)">Elimmeka123</strong><br>
+              <span style="font-size:11px">Les identifiants seront envoyés par email.</span>
+            </div>
+            <button class="btn btn-primary" onclick="createEmployee()" style="width:100%">👤 Créer le compte</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PREFERENCES ═══ -->
+    <div class="page" id="page-preferences">
+      <div class="pref-grid">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Préférences globales (profils)</span></div>
+          <div class="card-body" id="globalPrefContent">
+            <div class="empty-state"><span class="icon">☕</span>Chargement...</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Commandes d'aujourd'hui</span></div>
+          <div class="card-body" id="todayPrefContent">
+            <div class="empty-state"><span class="icon">🍵</span>Chargement...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ HISTORY ═══ -->
+    <div class="page" id="page-history">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Historique global des commandes</span>
+          <button class="btn btn-outline btn-sm" onclick="loadHistory()">🔄 Actualiser</button>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Employé</th><th>ID</th><th>Menu</th><th>Date repas</th><th>Boisson</th><th>Action</th><th>Horodatage</th></tr></thead>
+              <tbody id="histTableBody">
+                <tr><td colspan="7" class="empty-state">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-title" id="confirmTitle">Confirmer</div>
+    <p id="confirmMsg" style="font-size:14px;color:var(--muted);line-height:1.6"></p>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-danger" id="confirmBtn" onclick="confirmAction()">Confirmer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = '';
+let token = localStorage.getItem('fc_token');
+let pendingAction = null;
+
+// Auth guard
+if (!token || localStorage.getItem('fc_role') !== 'admin') {
+  window.location.href = '/';
+}
+
+// Headers
+function headers() {
+  return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
+}
+
+// Fetch wrapper — redirige vers login si token invalide (401)
+async function apiFetch(url, options = {}) {
+  options.headers = { ...headers(), ...(options.headers || {}) };
+  const res = await fetch(url, options);
+  if (res.status === 401) {
+    localStorage.clear();
+    window.location.href = '/';
+    return null;
+  }
+  return res;
+}
+
+// Toast
+function toast(msg, type = 'info') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+// Logout
+function logout() {
+  localStorage.clear();
+  window.location.href = '/';
+}
+
+// Sidebar mobile
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// Navigation
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const page = item.dataset.page;
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById(`page-${page}`).classList.add('active');
+    const titles = { dashboard:'Tableau de bord', orders:'Commandes du jour', validate:'Valider & Exporter', menus:'Gestion des menus', employees:'Employés', preferences:'Préférences boissons', history:'Historique' };
+    document.getElementById('pageTitle').textContent = titles[page];
+    closeSidebar();
+    if (page === 'dashboard') loadDashboard();
+    else if (page === 'orders') loadOrders();
+    else if (page === 'menus') { loadMenus(); }
+    else if (page === 'employees') loadEmployees();
+    else if (page === 'preferences') loadPreferences();
+    else if (page === 'history') loadHistory();
+    else if (page === 'validate') { document.getElementById('validateDate').value = todayStr(); loadValidateSummary(); }
+  });
+});
+
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+// Init date display
+function initDates() {
+  const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+  document.getElementById('topbarDate').textContent = new Date().toLocaleDateString('fr-FR', opts);
+  document.getElementById('ordersDateFilter').value = todayStr();
+  document.getElementById('validateDate').value = todayStr();
+}
+
+// ══════ DASHBOARD ══════
+async function loadDashboard() {
+  try {
+    const [r1, r2, r3] = await Promise.all([
+      apiFetch(`${API}/api/admin/stats`),
+      apiFetch(`${API}/api/admin/orders?date=${todayStr()}`),
+      apiFetch(`${API}/api/admin/preferences`)
+    ]);
+    if (!r1 || !r2 || !r3) return;
+    const [stats, orders, prefs] = await Promise.all([r1.json(), r2.json(), r3.json()]);
+    document.getElementById('s-emp').textContent = stats.employees || 0;
+    document.getElementById('s-menus').textContent = stats.todayMenus || 0;
+    document.getElementById('s-orders').textContent = stats.todayOrders || 0;
+    document.getElementById('s-pending').textContent = stats.pendingOrders || 0;
+
+    // Orders list
+    const ol = document.getElementById('dashOrdersList');
+    if (!orders.length) { ol.innerHTML = '<div class="empty-state"><span class="icon">🗒</span>Aucune commande</div>'; }
+    else {
+      ol.innerHTML = orders.slice(0, 8).map(o => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+          <div>
+            <div style="font-weight:600;font-size:14px">${o.first_name} ${o.last_name}</div>
+            <div style="font-size:12px;color:var(--muted)">${o.menu_name}</div>
+          </div>
+          <span class="badge badge-${o.status}">${o.status === 'validated' ? '✓ Validé' : '⏳ En attente'}</span>
+        </div>
+      `).join('');
+    }
+
+    // Pref bars
+    const pd = document.getElementById('dashPrefBars');
+    renderPrefBars(pd, prefs.today);
+  } catch(e) { toast('Erreur chargement tableau de bord', 'error'); }
+}
+
+function renderPrefBars(container, data) {
+  const total = (data.lipton || 0) + (data.nescafe || 0) + (data.both || 0);
+  if (!total) { container.innerHTML = '<div class="empty-state"><span class="icon">☕</span>Aucune préférence enregistrée</div>'; return; }
+  const pct = (v) => total ? Math.round((v/total)*100) : 0;
+  container.innerHTML = `
+    <div class="pref-bar-wrap">
+      <div class="pref-label"><span>🍵 Lipton</span><span>${data.lipton || 0} (${pct(data.lipton)}%)</span></div>
+      <div class="pref-bar-bg"><div class="pref-bar-fill fill-lipton" style="width:${pct(data.lipton)}%"></div></div>
+    </div>
+    <div class="pref-bar-wrap">
+      <div class="pref-label"><span>☕ Nescafé</span><span>${data.nescafe || 0} (${pct(data.nescafe)}%)</span></div>
+      <div class="pref-bar-bg"><div class="pref-bar-fill fill-nescafe" style="width:${pct(data.nescafe)}%"></div></div>
+    </div>
+    <div class="pref-bar-wrap">
+      <div class="pref-label"><span>🍵☕ Les deux</span><span>${data.both || 0} (${pct(data.both)}%)</span></div>
+      <div class="pref-bar-bg"><div class="pref-bar-fill fill-both" style="width:${pct(data.both)}%"></div></div>
+    </div>
+    <div style="margin-top:12px;font-size:12px;color:var(--muted);text-align:right">Total: ${total} choix</div>
+  `;
+}
+
+// ══════ ORDERS ══════
+async function loadOrders() {
+  const date = document.getElementById('ordersDateFilter').value || todayStr();
+  try {
+    const r = await apiFetch(`${API}/api/admin/orders?date=${date}`);
+    if (!r) return;
+    const orders = await r.json();
+    const tbody = document.getElementById('ordersTableBody');
+    if (!orders.length) { tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><span class="icon">🗒</span>Aucune commande pour cette date</div></td></tr>'; return; }
+    tbody.innerHTML = orders.map(o => {
+      const time = new Date(o.updated_at).toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+      return `<tr>
+        <td><strong>${o.first_name} ${o.last_name}</strong></td>
+        <td style="color:var(--muted);font-size:12px">${o.employee_id}</td>
+        <td>${o.menu_name}</td>
+        <td><span class="badge badge-${o.status}">${o.status === 'validated' ? '✓ Validé' : '⏳ En attente'}</span></td>
+        <td style="color:var(--muted);font-size:12px">${time}</td>
+      </tr>`;
+    }).join('');
+  } catch(e) { toast('Erreur chargement commandes', 'error'); }
+}
+
+// ══════ VALIDATE ══════
+async function loadValidateSummary() {
+  const date = document.getElementById('validateDate').value || todayStr();
+  try {
+    const r = await apiFetch(`${API}/api/admin/orders?date=${date}`);
+    if (!r) return;
+    const orders = await r.json();
+    const pending = orders.filter(o => o.status === 'pending').length;
+    const validated = orders.filter(o => o.status === 'validated').length;
+    document.getElementById('validateSummary').innerHTML = `
+      📊 <strong>${orders.length}</strong> commande(s) total — 
+      <span style="color:#16a34a">✓ ${validated} validée(s)</span> — 
+      <span style="color:#E85A2A">⏳ ${pending} en attente</span>
+    `;
+  } catch(e) {}
+}
+
+async function validateOrders() {
+  const date = document.getElementById('validateDate').value || todayStr();
+  try {
+    const res = await apiFetch(`${API}/api/admin/orders/validate`, { method:'POST', body: JSON.stringify({ date }) });
+    const data = await res.json();
+    toast(data.message, 'success');
+    loadValidateSummary();
+  } catch(e) { toast('Erreur validation', 'error'); }
+}
+
+function exportPDF() {
+  const date = document.getElementById('validateDate').value || todayStr();
+  window.open(`${API}/api/admin/export-pdf?date=${date}&token=${token}`, '_blank');
+  // Token in URL for PDF download
+  const link = document.createElement('a');
+  link.href = `/api/admin/export-pdf?date=${date}`;
+  // Use fetch with auth header instead
+  fetch(`${API}/api/admin/export-pdf?date=${date}`, { headers: headers() })
+    .then(r => r.blob())
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `commandes_${date}.pdf`;
+      a.click(); URL.revokeObjectURL(url);
+    }).catch(() => toast('Erreur export PDF', 'error'));
+}
+
+// ══════ MENUS ══════
+async function loadMenus() {
+  try {
+    const r = await apiFetch(`${API}/api/admin/menus`);
+    if (!r) return;
+    const menus = await r.json();
+    const tbody = document.getElementById('menusTableBody');
+    if (!menus.length) { tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><span class="icon">🍜</span>Aucun menu enregistré</div></td></tr>'; return; }
+    tbody.innerHTML = menus.map(m => `
+      <tr id="menu-row-${m.id}">
+        <td><strong>${m.name}</strong></td>
+        <td style="color:var(--muted);font-size:13px">${m.description || '—'}</td>
+        <td>
+          <button class="toggle-avail ${m.available ? 'on' : ''}" title="${m.available ? 'Disponible — cliquer pour désactiver' : 'Indisponible — cliquer pour activer'}" onclick="toggleAvailability(${m.id}, ${m.available})"></button>
+          <span style="font-size:12px;color:${m.available ? 'var(--success)' : 'var(--danger)'};margin-left:6px">${m.available ? 'Disponible' : 'Indisponible'}</span>
+        </td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteMenu(${m.id})">🗑</button></td>
+      </tr>
+    `).join('');
+  } catch(e) { toast('Erreur chargement menus', 'error'); }
+}
+
+async function addMenu() {
+  const name = document.getElementById('menuName').value.trim();
+  const desc = document.getElementById('menuDesc').value.trim();
+  if (!name) { toast('Nom du menu requis', 'error'); return; }
+  try {
+    const res = await apiFetch(`${API}/api/admin/menus`, { method:'POST', body: JSON.stringify({ name, description: desc }) });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    toast(`Menu "${name}" ajouté`, 'success');
+    document.getElementById('menuName').value = '';
+    document.getElementById('menuDesc').value = '';
+    loadMenus();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+async function deleteMenu(id) {
+  if (!confirm('Supprimer ce menu ?')) return;
+  try {
+    await apiFetch(`${API}/api/admin/menus/${id}`, { method:'DELETE' });
+    toast('Menu supprimé', 'success');
+    loadMenus();
+  } catch(e) { toast('Erreur suppression', 'error'); }
+}
+
+async function toggleAvailability(id, currentAvailable) {
+  const newValue = !currentAvailable;
+  try {
+    const r = await apiFetch(`${API}/api/admin/menus/${id}/availability`, {
+      method: 'PATCH', body: JSON.stringify({ available: newValue })
+    });
+    if (!r) return;
+    toast(newValue ? '✅ Menu rendu disponible' : '🚫 Menu rendu indisponible', newValue ? 'success' : 'info');
+    loadMenus();
+  } catch(e) { toast('Erreur mise à jour disponibilité', 'error'); }
+}
+
+// ══════ EMPLOYEES ══════
+async function loadEmployees() {
+  try {
+    const r = await apiFetch(`${API}/api/admin/employees`);
+    if (!r) return;
+    const emps = await r.json();
+    document.getElementById('empCount').textContent = `${emps.length} employé(s)`;
+    const tbody = document.getElementById('empTableBody');
+    if (!emps.length) { tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><span class="icon">👥</span>Aucun employé</div></td></tr>'; return; }
+    tbody.innerHTML = emps.map(e => {
+      const drinkLabel = { lipton:'🍵 Lipton', nescafe:'☕ Nescafé', both:'🍵☕ Les deux' }[e.drink_preference] || '—';
+      return `<tr>
+        <td><strong>${e.first_name} ${e.last_name}</strong></td>
+        <td><code style="background:#F9F1EB;padding:2px 8px;border-radius:6px;font-size:12px">${e.employee_id}</code></td>
+        <td style="font-size:13px;color:var(--muted)">${e.email}</td>
+        <td style="font-size:13px">${drinkLabel}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteEmployee(${e.id}, '${e.first_name} ${e.last_name}')">🗑</button></td>
+      </tr>`;
+    }).join('');
+  } catch(e) { toast('Erreur chargement employés', 'error'); }
+}
+
+function suggestEmpId() {
+  const first = document.getElementById('empFirst').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'');
+  const last = document.getElementById('empLast').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'');
+  if (first || last) document.getElementById('empId').value = first.charAt(0) + last;
+}
+
+async function createEmployee() {
+  const firstName = document.getElementById('empFirst').value.trim();
+  const lastName = document.getElementById('empLast').value.trim();
+  const email = document.getElementById('empEmail').value.trim();
+  const employeeId = document.getElementById('empId').value.trim();
+  if (!firstName || !lastName || !email || !employeeId) { toast('Tous les champs sont requis', 'error'); return; }
+  try {
+    const res = await apiFetch(`${API}/api/admin/employees`, { method:'POST', body: JSON.stringify({ firstName, lastName, email, employeeId }) });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    toast(`Compte de ${firstName} ${lastName} créé !`, 'success');
+    document.getElementById('empFirst').value = '';
+    document.getElementById('empLast').value = '';
+    document.getElementById('empEmail').value = '';
+    document.getElementById('empId').value = '';
+    loadEmployees();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+async function deleteEmployee(id, name) {
+  if (!confirm(`Supprimer l'employé "${name}" ? Cette action est irréversible.`)) return;
+  try {
+    await apiFetch(`${API}/api/admin/employees/${id}`, { method:'DELETE' });
+    toast(`Employé "${name}" supprimé`, 'success');
+    loadEmployees();
+  } catch(e) { toast('Erreur suppression', 'error'); }
+}
+
+// ══════ PREFERENCES ══════
+async function loadPreferences() {
+  try {
+    const r = await apiFetch(`${API}/api/admin/preferences`);
+    if (!r) return;
+    const prefs = await r.json();
+    renderPrefBars(document.getElementById('globalPrefContent'), prefs.global);
+    renderPrefBars(document.getElementById('todayPrefContent'), prefs.today);
+  } catch(e) { toast('Erreur chargement préférences', 'error'); }
+}
+
+// ══════ HISTORY ══════
+async function loadHistory() {
+  try {
+    const r = await apiFetch(`${API}/api/admin/history`);
+    if (!r) return;
+    const history = await r.json();
+    const tbody = document.getElementById('histTableBody');
+    if (!history.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><span class="icon">📅</span>Aucun historique</div></td></tr>'; return; }
+    const actionLabels = { created:'➕ Créé', updated:'✏️ Modifié', deleted:'🗑 Supprimé', validated:'✅ Validé' };
+    const actionColors = { created:'#D1FAE5', updated:'#DBEAFE', deleted:'#FEE2E2', validated:'#D1FAE5' };
+    const actionTextColors = { created:'#065F46', updated:'#1E40AF', deleted:'#991B1B', validated:'#065F46' };
+    tbody.innerHTML = history.map(h => {
+      const drinkLabel = { lipton:'🍵', nescafe:'☕', both:'🍵☕' }[h.drink_preference] || '—';
+      const ts = new Date(h.action_timestamp).toLocaleString('fr-FR', { day:'2-digit', month:'2-digit', year:'2-digit', hour:'2-digit', minute:'2-digit' });
+      const date = new Date(h.order_date + 'T12:00:00').toLocaleDateString('fr-FR');
+      const aLabel = actionLabels[h.action] || h.action;
+      const aBg = actionColors[h.action] || '#F3F4F6';
+      const aTxt = actionTextColors[h.action] || '#374151';
+      return `<tr>
+        <td><strong>${h.employee_name || '—'}</strong></td>
+        <td style="font-size:12px;color:var(--muted)">${h.employee_id || '—'}</td>
+        <td>${h.menu_name || '—'}</td>
+        <td style="font-size:12px">${date}</td>
+        <td>${drinkLabel}</td>
+        <td><span style="background:${aBg};color:${aTxt};padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600">${aLabel}</span></td>
+        <td style="font-size:11px;color:var(--muted)">${ts}</td>
+      </tr>`;
+    }).join('');
+  } catch(e) { toast('Erreur historique', 'error'); }
+}
+
+// Modal helpers
+function closeModal() { document.getElementById('confirmModal').classList.remove('open'); }
+function confirmAction() { if (pendingAction) { pendingAction(); pendingAction = null; } closeModal(); }
+
+// INIT
+initDates();
+loadDashboard();
+</script>
+</body>
+</html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodChoose — Mon repas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #E85A2A; --brown: #2C1810; --gold: #F9C74F;
+      --cream: #FFF8F3; --muted: #8B6554; --text: #1A1209;
+      --border: #F0E6DE; --success: #16a34a; --danger: #dc2626;
+      --sidebar-w: 240px;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: #F5EDE6; color: var(--text); display: flex; min-height: 100vh; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w); background: var(--brown); min-height: 100vh;
+      position: fixed; left: 0; top: 0; z-index: 100;
+      display: flex; flex-direction: column;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+    }
+    .sidebar-logo {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid rgba(255,248,243,0.08);
+    }
+    .sidebar-logo .logo-icon { font-size: 28px; margin-bottom: 6px; display: block; }
+    .sidebar-logo .logo-name {
+      font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900;
+      color: var(--cream); letter-spacing: -0.3px;
+    }
+    .sidebar-logo .logo-name span { color: var(--orange); }
+    .sidebar-nav { flex: 1; padding: 16px 0; }
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 24px; cursor: pointer;
+      color: rgba(255,248,243,0.55); font-size: 14px; font-weight: 500;
+      transition: all 0.2s; border-left: 3px solid transparent;
+      user-select: none;
+    }
+    .nav-item .icon { font-size: 18px; width: 22px; text-align: center; }
+    .nav-item:hover { color: var(--cream); background: rgba(255,248,243,0.05); }
+    .nav-item.active { color: var(--cream); background: rgba(232,90,42,0.15); border-left-color: var(--orange); }
+    .sidebar-footer {
+      padding: 16px 24px; border-top: 1px solid rgba(255,248,243,0.08);
+    }
+    .user-info { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .user-avatar {
+      width: 36px; height: 36px; background: var(--orange); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: white;
+    }
+    .user-name { font-size: 13px; font-weight: 600; color: var(--cream); }
+    .user-role { font-size: 11px; color: var(--muted); }
+    .btn-logout {
+      width: 100%; padding: 9px; background: rgba(232,90,42,0.15);
+      border: 1px solid rgba(232,90,42,0.3); color: var(--orange);
+      border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500;
+      font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+    }
+    .btn-logout:hover { background: rgba(232,90,42,0.25); }
+
+    /* MAIN */
+    .main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
+    .topbar {
+      background: var(--cream); padding: 20px 32px; display: flex;
+      align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50;
+    }
+    .topbar-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--brown); }
+    .topbar-date { font-size: 13px; color: var(--muted); }
+    .content { padding: 28px 32px; }
+
+    /* PAGE VISIBILITY */
+    .page { display: none; }
+    .page.active { display: block; animation: pageIn 0.3s ease both; }
+    @keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* MENU CARDS */
+    .menus-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .menu-card {
+      background: var(--cream); border: 2px solid var(--border); border-radius: 16px;
+      padding: 20px; cursor: pointer; transition: all 0.2s; position: relative;
+    }
+    .menu-card:hover { border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(232,90,42,0.12); }
+    .menu-card.selected { border-color: var(--orange); background: #FFF0EA; }
+    .menu-card.selected::after {
+      content: '✓'; position: absolute; top: 12px; right: 12px;
+      width: 24px; height: 24px; background: var(--orange); color: white;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+    }
+    .menu-card.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+    .menu-icon { font-size: 32px; margin-bottom: 10px; }
+    .menu-name { font-weight: 700; font-size: 15px; color: var(--brown); margin-bottom: 4px; }
+    .menu-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* DRINK SELECTOR */
+    .drink-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .drink-card {
+      background: var(--cream); border: 2px solid var(--border); border-radius: 14px;
+      padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.2s;
+    }
+    .drink-card:hover { border-color: var(--orange); }
+    .drink-card.selected { border-color: var(--orange); background: #FFF0EA; }
+    .drink-card .d-icon { font-size: 28px; margin-bottom: 6px; }
+    .drink-card .d-name { font-size: 13px; font-weight: 600; color: var(--brown); }
+
+    /* CURRENT ORDER BANNER */
+    .order-banner {
+      background: linear-gradient(135deg, var(--orange), #D14D22);
+      border-radius: 16px; padding: 20px 24px; color: white;
+      margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .order-banner .ob-title { font-size: 12px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+    .order-banner .ob-menu { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
+    .order-banner .ob-meta { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+
+    /* CARDS */
+    .card { background: var(--cream); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 24px; }
+    .card-header { padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+    .card-title { font-size: 15px; font-weight: 600; color: var(--brown); }
+    .card-body { padding: 20px 24px; }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; background: #F9F1EB; border-bottom: 1px solid var(--border); }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(232,90,42,0.03); }
+    .empty-state { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
+    .empty-state .icon { font-size: 36px; margin-bottom: 10px; display: block; }
+
+    /* BUTTONS */
+    .btn { padding: 9px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-primary { background: var(--orange); color: white; }
+    .btn-primary:hover { background: #D14D22; transform: translateY(-1px); }
+    .btn-danger { background: #dc2626; color: white; }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+    /* ACTION BAR */
+    .action-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+    /* TOAST */
+    .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+    .toast { background: var(--brown); color: var(--cream); padding: 14px 20px; border-radius: 12px; font-size: 14px; max-width: 320px; animation: toastIn 0.3s ease both; box-shadow: 0 8px 24px rgba(0,0,0,0.25); display: flex; align-items: center; gap: 10px; }
+    .toast.success { border-left: 4px solid #16a34a; }
+    .toast.error { border-left: 4px solid #dc2626; }
+    .toast.info { border-left: 4px solid var(--orange); }
+    @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* STATUS BADGES */
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.3px; }
+    .badge-pending { background: #FEF3C7; color: #92400E; }
+    .badge-validated { background: #D1FAE5; color: #065F46; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+    /* HAMBURGER (hidden on desktop) */
+    .hamburger {
+      display: none; align-items: center; justify-content: center;
+      width: 40px; height: 40px; background: var(--brown); border: none;
+      border-radius: 10px; cursor: pointer; font-size: 20px; color: var(--cream);
+      flex-shrink: 0;
+    }
+    /* SIDEBAR OVERLAY */
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5); z-index: 90;
+      backdrop-filter: blur(2px);
+    }
+
+    /* ═══════════ RESPONSIVE ═══════════ */
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-overlay.open { display: block; }
+      .main { margin-left: 0; }
+      .hamburger { display: flex; }
+      .topbar { padding: 14px 16px; gap: 12px; }
+      .topbar-title { font-size: 18px; }
+      .topbar-date { font-size: 11px; }
+      .content { padding: 14px 12px; }
+
+      .card-header { padding: 14px 16px; flex-wrap: wrap; gap: 8px; }
+      .card-body { padding: 14px 16px; }
+      .card { margin-bottom: 16px; }
+
+      .menus-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+      .menu-card { padding: 16px 12px; }
+      .menu-icon { font-size: 26px; }
+      .menu-name { font-size: 13px; }
+
+      .drink-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .drink-card { padding: 12px 8px; }
+      .drink-card .d-icon { font-size: 22px; }
+      .drink-card .d-name { font-size: 12px; }
+
+      .action-bar { flex-direction: column; }
+      .action-bar .btn { width: 100%; justify-content: center; }
+
+      .order-banner { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .order-banner > div:last-child { width: 100%; display: flex; gap: 8px; }
+      .order-banner > div:last-child .btn { flex: 1; justify-content: center; }
+
+      th, td { padding: 10px 10px; font-size: 12px; }
+
+      .toast-container { top: auto; bottom: 16px; right: 12px; left: 12px; }
+      .toast { max-width: 100%; font-size: 13px; }
+    }
+
+    @media (max-width: 480px) {
+      .topbar-date { display: none; }
+      .menus-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .drink-grid { gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">🍽</span>
+    <div class="logo-name">Food<span>Choose</span></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-item active" data-page="order"><span class="icon">🍜</span> Choisir mon repas</div>
+    <div class="nav-item" data-page="preference"><span class="icon">☕</span> Préférence boisson</div>
+    <div class="nav-item" data-page="history"><span class="icon">📅</span> Mon historique</div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <div class="user-avatar" id="userAvatar">?</div>
+      <div>
+        <div class="user-name" id="sidebarName">—</div>
+        <div class="user-role" id="sidebarId">—</div>
+      </div>
+    </div>
+    <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <div style="flex:1">
+      <div class="topbar-title" id="pageTitle">Choisir mon repas</div>
+    </div>
+    <div class="topbar-date" id="topbarDate"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- ═══ ORDER PAGE ═══ -->
+    <div class="page active" id="page-order">
+
+      <!-- Current order banner (if exists) -->
+      <div id="currentOrderBanner" style="display:none"></div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🍜 Menus du jour</span>
+          <span id="menuDateLabel" style="font-size:13px;color:var(--muted)"></span>
+        </div>
+        <div class="card-body">
+          <div id="menusGrid" class="menus-grid">
+            <div class="empty-state" style="grid-column:1/-1"><span class="icon">⏳</span>Chargement des menus...</div>
+          </div>
+
+          <div class="action-bar" id="orderActions" style="display:none">
+            <button class="btn btn-primary" id="submitOrderBtn" onclick="submitOrder()">✅ Confirmer ma commande</button>
+          </div>
+
+          <!-- Edit mode actions -->
+          <div class="action-bar" id="editActions" style="display:none">
+            <button class="btn btn-primary" onclick="updateOrder()">💾 Enregistrer les modifications</button>
+            <button class="btn btn-danger" onclick="deleteOrder()">🗑 Supprimer ma commande</button>
+            <button class="btn btn-outline" onclick="cancelEdit()">✕ Annuler</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ PREFERENCE PAGE ═══ -->
+    <div class="page" id="page-preference">
+      <div class="card" style="max-width:480px">
+        <div class="card-header"><span class="card-title">☕ Ma préférence boisson</span></div>
+        <div class="card-body">
+          <p style="font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6">
+            Choisissez votre préférence de boisson habituelle. Elle sera pré-sélectionnée lors de vos commandes.
+          </p>
+          <div class="drink-grid">
+            <div class="drink-card" data-drink="lipton" onclick="selectGlobalDrink('lipton')">
+              <div class="d-icon">🍵</div>
+              <div class="d-name">Lipton</div>
+            </div>
+            <div class="drink-card" data-drink="nescafe" onclick="selectGlobalDrink('nescafe')">
+              <div class="d-icon">☕</div>
+              <div class="d-name">Nescafé</div>
+            </div>
+            <div class="drink-card" data-drink="both" onclick="selectGlobalDrink('both')">
+              <div class="d-icon">🍵☕</div>
+              <div class="d-name">Les deux</div>
+            </div>
+          </div>
+          <div id="currentPrefLabel" style="margin-top:16px;font-size:14px;color:var(--muted);text-align:center"></div>
+          <button class="btn btn-primary" onclick="saveGlobalPreference()" style="width:100%;margin-top:16px">💾 Enregistrer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ HISTORY PAGE ═══ -->
+    <div class="page" id="page-history">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📅 Historique de mes commandes</span>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline btn-sm" onclick="loadHistory()">🔄 Actualiser</button>
+            <button class="btn btn-danger btn-sm" onclick="clearHistory()">🗑 Vider l'historique</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Menu</th><th>Date du repas</th><th>Boisson</th><th>Action</th><th>Date/Heure</th><th>Suppr.</th></tr></thead>
+              <tbody id="histTableBody">
+                <tr><td colspan="6"><div class="empty-state"><span class="icon">📅</span>Chargement...</div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+const API = '';
+let token = localStorage.getItem('fc_token');
+let currentOrder = null;
+let selectedMenuId = null;
+let globalDrink = null;
+let editMode = false;
+let profile = null;
+
+// Auth guard
+if (!token || localStorage.getItem('fc_role') !== 'employee') {
+  window.location.href = '/';
+}
+
+function headers() {
+  return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
+}
+
+async function apiFetch(url, options = {}) {
+  options.headers = { ...headers(), ...(options.headers || {}) };
+  const res = await fetch(url, options);
+  if (res.status === 401) {
+    localStorage.clear();
+    window.location.href = '/';
+    return null;
+  }
+  return res;
+}
+
+function toast(msg, type = 'info') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+function logout() { localStorage.clear(); window.location.href = '/'; }
+
+// Sidebar mobile
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// Sidebar user info
+const name = localStorage.getItem('fc_name') || '—';
+const eid = localStorage.getItem('fc_eid') || '—';
+document.getElementById('sidebarName').textContent = name;
+document.getElementById('sidebarId').textContent = eid;
+document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+
+// Navigation
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const page = item.dataset.page;
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById(`page-${page}`).classList.add('active');
+    const titles = { order:'Choisir mon repas', preference:'Préférence boisson', history:'Mon historique' };
+    document.getElementById('pageTitle').textContent = titles[page];
+    closeSidebar();
+    if (page === 'order') loadOrderPage();
+    else if (page === 'preference') loadPreferencePage();
+    else if (page === 'history') loadHistory();
+  });
+});
+
+function todayStr() { return new Date().toISOString().split('T')[0]; }
+
+// Init
+function init() {
+  const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+  document.getElementById('topbarDate').textContent = new Date().toLocaleDateString('fr-FR', opts);
+  document.getElementById('menuDateLabel').textContent = new Date().toLocaleDateString('fr-FR', opts);
+  loadOrderPage();
+  loadProfile();
+}
+
+async function loadProfile() {
+  try {
+    const rp = await apiFetch(`${API}/api/employee/profile`);
+    if (!rp) return;
+    profile = await rp.json();
+    if (profile.drink_preference) {
+      globalDrink = profile.drink_preference;
+      updateGlobalDrinkUI();
+    }
+  } catch(e) {}
+}
+
+// ══════ ORDER PAGE ══════
+async function loadOrderPage() {
+  editMode = false;
+  selectedMenuId = null;
+  document.getElementById('orderActions').style.display = 'none';
+  document.getElementById('editActions').style.display = 'none';
+
+  try {
+    const [rm, ro] = await Promise.all([
+      apiFetch(`${API}/api/employee/menus`),
+      apiFetch(`${API}/api/employee/order`)
+    ]);
+
+    if (!rm || !ro) return;
+    const [menus, order] = await Promise.all([rm.json(), ro.json()]);
+    currentOrder = order;
+    renderMenus(menus, order);
+    renderOrderBanner(order);
+  } catch(e) {
+    toast('Erreur chargement', 'error');
+  }
+}
+
+function renderMenus(menus, currentOrder) {
+  const grid = document.getElementById('menusGrid');
+  if (!menus.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><span class="icon">🍜</span>Aucun menu disponible aujourd\'hui.<br><small>Revenez plus tard ou contactez l\'administrateur.</small></div>';
+    return;
+  }
+  const icons = ['🍜', '🥗', '🍛', '🥘', '🍲', '🫕', '🥩', '🍱', '🌮', '🥙'];
+  grid.innerHTML = menus.map((m, i) => {
+    const isSelected = currentOrder && currentOrder.menu_id === m.id;
+    const isDisabled = currentOrder && currentOrder.status === 'validated';
+    return `
+      <div class="menu-card${isSelected ? ' selected' : ''}${isDisabled && !isSelected ? ' disabled' : ''}"
+           onclick="selectMenu(${m.id}, this)" data-id="${m.id}">
+        <div class="menu-icon">${icons[i % icons.length]}</div>
+        <div class="menu-name">${m.name}</div>
+        ${m.description ? `<div class="menu-desc">${m.description}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+
+  if (currentOrder && !editMode) {
+    // Show current selection but don't allow changes until edit mode
+    const selectedCard = grid.querySelector(`[data-id="${currentOrder.menu_id}"]`);
+    if (selectedCard) selectedCard.classList.add('selected');
+  }
+}
+
+function renderOrderBanner(order) {
+  const banner = document.getElementById('currentOrderBanner');
+  if (!order) { banner.style.display = 'none'; return; }
+  banner.style.display = 'block';
+  banner.innerHTML = `
+    <div class="order-banner">
+      <div>
+        <div class="ob-title">Votre commande du jour</div>
+        <div class="ob-menu">${order.menu_name}</div>
+        <div class="ob-meta"><span class="badge badge-${order.status}" style="font-size:11px">${order.status === 'validated' ? '✓ Validée' : '⏳ En attente'}</span></div>
+      </div>
+      ${order.status !== 'validated' ? `
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.4)" onclick="enterEditMode()">✏️ Modifier</button>
+        <button class="btn" style="background:rgba(220,38,38,0.8);color:white" onclick="deleteOrder()">🗑 Supprimer</button>
+      </div>` : '<div style="opacity:0.7;font-size:13px">Commande validée<br>par l\'admin</div>'}
+    </div>
+  `;
+}
+
+function selectMenu(id, el) {
+  if (!editMode && currentOrder) return;
+  selectedMenuId = id;
+  document.querySelectorAll('.menu-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  if (!currentOrder) {
+    document.getElementById('orderActions').style.display = 'flex';
+  } else if (editMode) {
+    document.getElementById('editActions').style.display = 'flex';
+  }
+}
+
+function enterEditMode() {
+  editMode = true;
+  document.getElementById('currentOrderBanner').style.display = 'none';
+  document.getElementById('editActions').style.display = 'none';
+  document.getElementById('orderActions').style.display = 'none';
+  if (currentOrder) {
+    const card = document.querySelector(`[data-id="${currentOrder.menu_id}"]`);
+    if (card) { card.classList.add('selected'); selectedMenuId = currentOrder.menu_id; }
+    document.getElementById('editActions').style.display = 'flex';
+  }
+  toast('Mode modification activé — choisissez un nouveau menu', 'info');
+}
+
+function cancelEdit() {
+  editMode = false;
+  loadOrderPage();
+}
+
+async function submitOrder() {
+  if (!selectedMenuId) { toast('Veuillez choisir un menu', 'error'); return; }
+  try {
+    const res = await apiFetch(`${API}/api/employee/order`, {
+      method: 'POST', body: JSON.stringify({ menuId: selectedMenuId })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    toast('🎉 Commande enregistrée !', 'success');
+    loadOrderPage();
+    loadProfile();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+async function updateOrder() {
+  if (!selectedMenuId) { toast('Veuillez choisir un menu', 'error'); return; }
+  try {
+    const res = await apiFetch(`${API}/api/employee/order/${currentOrder.id}`, {
+      method: 'PUT', body: JSON.stringify({ menuId: selectedMenuId })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    toast('✅ Commande modifiée !', 'success');
+    loadOrderPage();
+    loadProfile();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+async function deleteOrder() {
+  if (!currentOrder) return;
+  if (!confirm('Supprimer votre commande du jour ?')) return;
+  try {
+    const res = await apiFetch(`${API}/api/employee/order/${currentOrder.id}`, { method:'DELETE' });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    toast('Commande supprimée', 'success');
+    loadOrderPage();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+// ══════ PREFERENCE PAGE ══════
+async function loadPreferencePage() {
+  await loadProfile();
+  updateGlobalDrinkUI();
+}
+
+function selectGlobalDrink(drink) {
+  globalDrink = drink;
+  updateGlobalDrinkUI();
+}
+
+function updateGlobalDrinkUI() {
+  document.querySelectorAll('#page-preference .drink-card').forEach(c => c.classList.remove('selected'));
+  if (globalDrink) {
+    const el = document.querySelector(`#page-preference [data-drink="${globalDrink}"]`);
+    if (el) el.classList.add('selected');
+    const labels = { lipton:'🍵 Lipton', nescafe:'☕ Nescafé', both:'🍵☕ Les deux' };
+    document.getElementById('currentPrefLabel').textContent = `Préférence actuelle : ${labels[globalDrink] || '—'}`;
+  } else {
+    document.getElementById('currentPrefLabel').textContent = 'Aucune préférence enregistrée';
+  }
+}
+
+async function saveGlobalPreference() {
+  if (!globalDrink) { toast('Choisissez une préférence', 'error'); return; }
+  try {
+    const res = await apiFetch(`${API}/api/employee/preference`, {
+      method: 'PUT', body: JSON.stringify({ drinkPreference: globalDrink })
+    });
+    if (!res.ok) throw new Error('Erreur');
+    toast('Préférence enregistrée !', 'success');
+  } catch(e) { toast('Erreur sauvegarde', 'error'); }
+}
+
+// ══════ HISTORY ══════
+async function loadHistory() {
+  try {
+    const rh = await apiFetch(`${API}/api/employee/history`);
+    if (!rh) return;
+    const history = await rh.json();
+    const tbody = document.getElementById('histTableBody');
+    if (!history.length) {
+      tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><span class="icon">📅</span>Aucun historique de commande</div></td></tr>';
+      return;
+    }
+    const actionLabels = { created:'➕ Commandé', updated:'✏️ Modifié', deleted:'🗑 Supprimé', validated:'✅ Validé' };
+    const actionColors = { created:'#D1FAE5', updated:'#DBEAFE', deleted:'#FEE2E2', validated:'#D1FAE5' };
+    const actionTextColors = { created:'#065F46', updated:'#1E40AF', deleted:'#991B1B', validated:'#065F46' };
+    tbody.innerHTML = history.map(h => {
+      const drinkLabel = { lipton:'🍵 Lipton', nescafe:'☕ Nescafé', both:'🍵☕ Les deux' }[h.drink_preference] || '—';
+      const date = new Date(h.order_date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday:'short', day:'2-digit', month:'short', year:'numeric' });
+      const ts = new Date(h.action_timestamp).toLocaleString('fr-FR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+      const aBg = actionColors[h.action] || '#F3F4F6';
+      const aTxt = actionTextColors[h.action] || '#374151';
+      return `<tr>
+        <td><strong>${h.menu_name || '—'}</strong></td>
+        <td style="font-size:13px">${date}</td>
+        <td style="font-size:13px">${drinkLabel}</td>
+        <td><span style="background:${aBg};color:${aTxt};padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600">${actionLabels[h.action] || h.action}</span></td>
+        <td style="font-size:11px;color:var(--muted)">${ts}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteHistoryEntry(${h.id})">🗑</button></td>
+      </tr>`;
+    }).join('');
+  } catch(e) { toast('Erreur historique', 'error'); }
+}
+
+async function deleteHistoryEntry(id) {
+  if (!confirm('Supprimer cette entrée ?')) return;
+  try {
+    await apiFetch(`${API}/api/employee/history/${id}`, { method:'DELETE' });
+    toast('Entrée supprimée', 'success');
+    loadHistory();
+  } catch(e) { toast('Erreur', 'error'); }
+}
+
+async function clearHistory() {
+  if (!confirm('Vider tout votre historique ? Cette action est irréversible.')) return;
+  try {
+    await apiFetch(`${API}/api/employee/history`, { method:'DELETE' });
+    toast('Historique vidé', 'success');
+    loadHistory();
+  } catch(e) { toast('Erreur', 'error'); }
+}
+
+// INIT
+init();
+</script>
+</body>
+</html>

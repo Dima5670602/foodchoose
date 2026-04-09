@@ -79,7 +79,7 @@ async function initDB() {
 initDB();
 
 // ─── JWT Secret ───────────────────────────────────────────────────
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'fC!9xKmP2vL7nQwR4tY6uI0eA3sDgHjZ5bN8cXoE1foodchoose2024secure';
 
 // ─── Email Transporter ────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
@@ -158,8 +158,8 @@ app.post('/api/auth/login', async (req, res) => {
   const { employeeId, password } = req.body;
   if (!employeeId || !password) return res.status(400).json({ error: 'Champs requis' });
 
-  const adminUser = process.env.ADMIN_USER;
-  const adminPass = process.env.ADMIN_PASSWORD;
+  const adminUser = process.env.ADMIN_USER || 'admin';
+  const adminPass = process.env.ADMIN_PASSWORD || '@admin123';
 
   if (employeeId === adminUser && password === adminPass) {
     const token = jwt.sign({ id: 0, employeeId: 'admin', role: 'admin', name: 'Administrateur' }, JWT_SECRET, { expiresIn: '8h' });
@@ -631,6 +631,24 @@ app.get('/api/employee/profile', authMiddleware, async (req, res) => {
       [req.user.id]
     );
     res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT /api/employee/change-password
+app.put('/api/employee/change-password', authMiddleware, async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  if (!currentPassword || !newPassword) return res.status(400).json({ error: 'Champs requis' });
+  if (newPassword.length < 6) return res.status(400).json({ error: 'Le nouveau mot de passe doit contenir au moins 6 caractères' });
+  try {
+    const result = await pool.query('SELECT password_hash FROM users WHERE id = $1', [req.user.id]);
+    if (!result.rows.length) return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    const valid = await bcrypt.compare(currentPassword, result.rows[0].password_hash);
+    if (!valid) return res.status(401).json({ error: 'Mot de passe actuel incorrect' });
+    const newHash = await bcrypt.hash(newPassword, 10);
+    await pool.query('UPDATE users SET password_hash = $1 WHERE id = $2', [newHash, req.user.id]);
+    res.json({ message: 'Mot de passe modifié avec succès' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

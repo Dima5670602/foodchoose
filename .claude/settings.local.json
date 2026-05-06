@@ -35,7 +35,10 @@
       "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3100 -ErrorAction SilentlyContinue\")",
       "Bash(PGPASSWORD=\"Hz3256mobile#\" psql -U postgres -h localhost -p 5433 -c \"CREATE DATABASE foodchoose;\" 2>&1)",
       "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3100 -ErrorAction SilentlyContinue | Select-Object LocalAddress, LocalPort, State, OwningProcess\" 2>&1)",
-      "Bash(powershell -Command \"Stop-Process -Id 19600 -Force\")"
+      "Bash(powershell -Command \"Stop-Process -Id 19600 -Force\")",
+      "Bash(Get-ChildItem -Path \"F:\\\\JustpourElImmeka\\\\foodchoose\" -Recurse -Force)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Sort-Object)"
     ]
   }
 }

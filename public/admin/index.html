@@ -12,7 +12,7 @@
       --orange: #E85A2A; --brown: #2C1810; --gold: #F9C74F;
       --cream: #FFF8F3; --muted: #8B6554; --text: #1A1209;
       --border: #F0E6DE; --success: #16a34a; --danger: #dc2626;
-      --sidebar-w: 240px;
+      --sidebar-w: 250px;
     }
     body { font-family: 'DM Sans', sans-serif; background: #F5EDE6; color: var(--text); display: flex; min-height: 100vh; }
 
@@ -23,339 +23,233 @@
       display: flex; flex-direction: column;
       box-shadow: 4px 0 20px rgba(0,0,0,0.15);
     }
-    .sidebar-logo {
-      padding: 28px 24px 20px;
-      border-bottom: 1px solid rgba(255,248,243,0.08);
-    }
-    .sidebar-logo .logo-icon { font-size: 28px; margin-bottom: 6px; display: block; }
-    .sidebar-logo .logo-name {
-      font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900;
-      color: var(--cream); letter-spacing: -0.3px;
-    }
+    .sidebar-logo { padding: 24px 20px 18px; border-bottom: 1px solid rgba(255,248,243,0.08); }
+    .sidebar-logo .logo-icon { font-size: 26px; margin-bottom: 4px; display: block; }
+    .sidebar-logo .logo-name { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 900; color: var(--cream); }
     .sidebar-logo .logo-name span { color: var(--orange); }
-    .sidebar-logo .admin-badge {
-      display: inline-block; background: var(--orange); color: white;
-      font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px;
-      text-transform: uppercase; letter-spacing: 0.8px; margin-top: 6px;
-    }
-    .sidebar-nav { flex: 1; padding: 16px 0; }
-    .nav-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 24px; cursor: pointer;
-      color: rgba(255,248,243,0.55); font-size: 14px; font-weight: 500;
-      transition: all 0.2s; border-left: 3px solid transparent;
-      user-select: none;
-    }
-    .nav-item .icon { font-size: 18px; width: 22px; text-align: center; }
+    .sidebar-logo .admin-badge { display: inline-block; background: var(--orange); color: white; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 5px; }
+    .sidebar-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 11px 20px; cursor: pointer; color: rgba(255,248,243,0.55); font-size: 13px; font-weight: 500; transition: all 0.2s; border-left: 3px solid transparent; user-select: none; }
+    .nav-item .icon { font-size: 17px; width: 20px; text-align: center; }
     .nav-item:hover { color: var(--cream); background: rgba(255,248,243,0.05); }
     .nav-item.active { color: var(--cream); background: rgba(232,90,42,0.15); border-left-color: var(--orange); }
-    .nav-section {
-      padding: 16px 24px 8px; font-size: 10px; font-weight: 600;
-      color: rgba(255,248,243,0.25); text-transform: uppercase; letter-spacing: 1.2px;
-    }
-    .sidebar-footer {
-      padding: 16px 24px; border-top: 1px solid rgba(255,248,243,0.08);
-    }
-    .user-info { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .user-avatar {
-      width: 36px; height: 36px; background: var(--orange); border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700; color: white;
-    }
+    .nav-section { padding: 14px 20px 6px; font-size: 10px; font-weight: 600; color: rgba(255,248,243,0.25); text-transform: uppercase; letter-spacing: 1.2px; }
+    .sidebar-footer { padding: 14px 20px; border-top: 1px solid rgba(255,248,243,0.08); }
+    .user-info { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .user-avatar { width: 34px; height: 34px; background: var(--orange); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: white; }
     .user-name { font-size: 13px; font-weight: 600; color: var(--cream); }
     .user-role { font-size: 11px; color: var(--muted); }
-    .btn-logout {
-      width: 100%; padding: 9px; background: rgba(232,90,42,0.15);
-      border: 1px solid rgba(232,90,42,0.3); color: var(--orange);
-      border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500;
-      font-family: 'DM Sans', sans-serif; transition: all 0.2s;
-    }
+    .btn-logout { width: 100%; padding: 8px; background: rgba(232,90,42,0.15); border: 1px solid rgba(232,90,42,0.3); color: var(--orange); border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
     .btn-logout:hover { background: rgba(232,90,42,0.25); }
 
     /* MAIN */
     .main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
-    .topbar {
-      background: var(--cream); padding: 20px 32px; display: flex;
-      align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50;
-    }
-    .topbar-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--brown); }
-    .topbar-date { font-size: 13px; color: var(--muted); }
-    .content { padding: 28px 32px; }
+    .topbar { background: var(--cream); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; }
+    .topbar-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--brown); }
+    .topbar-date { font-size: 12px; color: var(--muted); }
+    .content { padding: 24px 28px; }
 
-    /* PAGE VISIBILITY */
+    /* PAGES */
     .page { display: none; }
     .page.active { display: block; animation: pageIn 0.3s ease both; }
-    @keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pageIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
 
-    /* STATS GRID */
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
-    .stat-card {
-      background: var(--cream); border-radius: 16px; padding: 22px;
-      border: 1px solid var(--border); position: relative; overflow: hidden;
-    }
-    .stat-card::after {
-      content: ''; position: absolute; top: -20px; right: -20px;
-      width: 80px; height: 80px; border-radius: 50%;
-      background: rgba(232,90,42,0.07);
-    }
-    .stat-number { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--brown); line-height: 1; }
-    .stat-label { font-size: 12px; color: var(--muted); margin-top: 6px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-    .stat-icon { font-size: 24px; margin-bottom: 10px; }
+    /* STATS */
+    .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 24px; }
+    .stat-card { background: var(--cream); border-radius: 14px; padding: 18px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+    .stat-card::after { content: ''; position: absolute; top: -20px; right: -20px; width: 70px; height: 70px; border-radius: 50%; background: rgba(232,90,42,0.07); }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--brown); line-height: 1; }
+    .stat-label { font-size: 11px; color: var(--muted); margin-top: 5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-icon { font-size: 22px; margin-bottom: 8px; }
 
     /* CARDS */
-    .card {
-      background: var(--cream); border-radius: 16px;
-      border: 1px solid var(--border); overflow: hidden; margin-bottom: 24px;
-    }
-    .card-header {
-      padding: 20px 24px; display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-    }
-    .card-title { font-size: 15px; font-weight: 600; color: var(--brown); }
-    .card-body { padding: 20px 24px; }
+    .card { background: var(--cream); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 20px; }
+    .card-header { padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 10px; }
+    .card-title { font-size: 14px; font-weight: 600; color: var(--brown); }
+    .card-body { padding: 18px 22px; }
 
     /* TABLE */
     .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th {
-      text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600;
-      color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px;
-      background: #F9F1EB; border-bottom: 1px solid var(--border);
-    }
-    td { padding: 13px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 9px 12px; font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; background: #F9F1EB; border-bottom: 1px solid var(--border); }
+    td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: rgba(232,90,42,0.03); }
-    .empty-state { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
-    .empty-state .icon { font-size: 36px; margin-bottom: 10px; display: block; }
+    .empty-state { text-align: center; padding: 36px; color: var(--muted); font-size: 13px; }
+    .empty-state .icon { font-size: 32px; margin-bottom: 8px; display: block; }
 
     /* BADGES */
-    .badge {
-      display: inline-block; padding: 3px 10px; border-radius: 20px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
-    }
+    .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
     .badge-pending { background: #FEF3C7; color: #92400E; }
     .badge-validated { background: #D1FAE5; color: #065F46; }
-    .badge-lipton { background: #DBEAFE; color: #1E40AF; }
-    .badge-nescafe { background: #FEF9C3; color: #713F12; }
+    .badge-food { background: #FED7AA; color: #C2410C; }
+    .badge-drink { background: #DBEAFE; color: #1D4ED8; }
     .badge-both { background: #F3E8FF; color: #6B21A8; }
 
     /* BUTTONS */
-    .btn {
-      padding: 9px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
-      font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; transition: all 0.2s;
-      display: inline-flex; align-items: center; gap: 6px;
-    }
+    .btn { padding: 8px 16px; border-radius: 9px; font-size: 12px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 5px; }
     .btn-primary { background: var(--orange); color: white; }
     .btn-primary:hover { background: #D14D22; transform: translateY(-1px); }
     .btn-success { background: #16a34a; color: white; }
     .btn-success:hover { background: #15803d; }
     .btn-danger { background: #dc2626; color: white; }
     .btn-danger:hover { background: #b91c1c; }
-    .btn-outline {
-      background: transparent; border: 1.5px solid var(--border);
-      color: var(--text);
-    }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
     .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
-    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    .btn-sm { padding: 5px 10px; font-size: 11px; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
     /* FORMS */
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .form-control {
-      width: 100%; padding: 11px 14px; background: white; border: 1.5px solid var(--border);
-      border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif;
-      color: var(--text); transition: all 0.2s; outline: none;
-    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-control { width: 100%; padding: 10px 13px; background: white; border: 1.5px solid var(--border); border-radius: 9px; font-size: 13px; font-family: 'DM Sans', sans-serif; color: var(--text); transition: all 0.2s; outline: none; }
     .form-control:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(232,90,42,0.1); }
     .form-control::placeholder { color: #C4A898; }
+    select.form-control { cursor: pointer; }
+
+    /* IMAGE UPLOAD */
+    .img-upload-area {
+      border: 2px dashed var(--border); border-radius: 10px;
+      padding: 20px; text-align: center; cursor: pointer;
+      transition: all 0.2s; background: white; position: relative;
+    }
+    .img-upload-area:hover { border-color: var(--orange); background: #FFF0EA; }
+    .img-upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .img-upload-area .upload-icon { font-size: 28px; margin-bottom: 6px; display: block; }
+    .img-upload-area .upload-text { font-size: 12px; color: var(--muted); }
+    .img-preview { width: 100%; max-height: 140px; object-fit: cover; border-radius: 8px; margin-top: 10px; display: none; }
 
     /* MODAL */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(44,24,16,0.6);
-      z-index: 200; display: none; align-items: center; justify-content: center;
-      backdrop-filter: blur(4px);
-    }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(44,24,16,0.6); z-index: 200; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
     .modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .modal {
-      background: var(--cream); border-radius: 20px; padding: 32px;
-      width: 100%; max-width: 480px; margin: 20px;
-      animation: modalIn 0.3s cubic-bezier(0.16,1,0.3,1) both;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.3);
-    }
-    @keyframes modalIn { from { opacity: 0; transform: scale(0.92) translateY(16px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-    .modal-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--brown); margin-bottom: 24px; }
-    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    .modal { background: var(--cream); border-radius: 18px; padding: 28px; width: 100%; max-width: 500px; margin: 20px; animation: modalIn 0.3s cubic-bezier(0.16,1,0.3,1) both; box-shadow: 0 40px 80px rgba(0,0,0,0.3); }
+    @keyframes modalIn { from { opacity:0; transform: scale(0.92) translateY(16px); } to { opacity:1; transform: scale(1) translateY(0); } }
+    .modal-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--brown); margin-bottom: 20px; }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
 
-    /* PREFERENCE BARS */
-    .pref-bar-wrap { margin-bottom: 16px; }
-    .pref-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
-    .pref-bar-bg { background: var(--border); border-radius: 8px; height: 10px; overflow: hidden; }
-    .pref-bar-fill { height: 100%; border-radius: 8px; transition: width 0.8s cubic-bezier(0.16,1,0.3,1); }
-    .fill-lipton { background: #3B82F6; }
-    .fill-nescafe { background: #F59E0B; }
-    .fill-both { background: #8B5CF6; }
-    /* Toggle disponibilité menu */
-    .toggle-avail { cursor:pointer; width:36px; height:20px; background:#e5e7eb; border-radius:20px; position:relative; display:inline-block; transition:background 0.2s; border:none; }
-    .toggle-avail.on { background:#16a34a; }
-    .toggle-avail::after { content:''; position:absolute; top:2px; left:2px; width:16px; height:16px; background:white; border-radius:50%; transition:left 0.2s; }
-    .toggle-avail.on::after { left:18px; }
+    /* TOGGLE */
+    .toggle-avail { cursor: pointer; width: 34px; height: 19px; background: #e5e7eb; border-radius: 20px; position: relative; display: inline-block; transition: background 0.2s; border: none; flex-shrink: 0; }
+    .toggle-avail.on { background: #16a34a; }
+    .toggle-avail::after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; background: white; border-radius: 50%; transition: left 0.2s; }
+    .toggle-avail.on::after { left: 17px; }
 
-    /* DATE PICKER */
-    .date-filter { display: flex; align-items: center; gap: 10px; }
-    .date-filter input[type=date] {
-      padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px;
-      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text);
-      background: white; outline: none; cursor: pointer;
-    }
+    /* DATE FILTER */
+    .date-filter { display: flex; align-items: center; gap: 8px; }
+    .date-filter input[type=date] { padding: 7px 11px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text); background: white; outline: none; cursor: pointer; }
     .date-filter input[type=date]:focus { border-color: var(--orange); }
 
     /* TOAST */
     .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
-    .toast {
-      background: var(--brown); color: var(--cream); padding: 14px 20px;
-      border-radius: 12px; font-size: 14px; max-width: 320px;
-      animation: toastIn 0.3s ease both;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-      display: flex; align-items: center; gap: 10px;
-    }
+    .toast { background: var(--brown); color: var(--cream); padding: 13px 18px; border-radius: 12px; font-size: 13px; max-width: 320px; animation: toastIn 0.3s ease both; box-shadow: 0 8px 24px rgba(0,0,0,0.25); display: flex; align-items: center; gap: 8px; }
     .toast.success { border-left: 4px solid #16a34a; }
     .toast.error { border-left: 4px solid #dc2626; }
     .toast.info { border-left: 4px solid var(--orange); }
-    @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes toastIn { from { opacity:0; transform: translateX(20px); } to { opacity:1; transform: translateX(0); } }
 
-    /* Scrollbar */
+    /* DAY TABS */
+    .day-tab-btn {
+      padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;
+      font-family: 'DM Sans', sans-serif; cursor: pointer; border: 1.5px solid var(--border);
+      background: white; color: var(--muted); transition: all 0.2s;
+    }
+    .day-tab-btn:hover { border-color: var(--orange); color: var(--orange); }
+    .day-tab-btn.active { background: var(--orange); color: white; border-color: var(--orange); }
+
+    /* WEEKLY GRID */
+    .weekly-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+    .weekly-cell { background: #F9F1EB; border-radius: 10px; padding: 10px 8px; text-align: center; }
+    .weekly-cell .wday { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .weekly-cell .wcount { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--brown); line-height: 1; }
+    .weekly-cell .wtype { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+    /* STARS */
+    .stars { display: inline-flex; gap: 2px; }
+    .star { color: #F9C74F; font-size: 14px; }
+    .star.empty { color: #D1BAB0; }
+
+    /* LAYOUTS */
+    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .two-col { display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start; }
+    .pref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* MENU ITEM CARD (preview in list) */
+    .menu-item-img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; background: var(--border); flex-shrink: 0; }
+    .menu-item-img-placeholder { width: 48px; height: 48px; background: var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+
+    /* HAMBURGER */
+    .hamburger { display: none; align-items: center; justify-content: center; width: 38px; height: 38px; background: var(--brown); border: none; border-radius: 9px; cursor: pointer; font-size: 18px; color: var(--cream); flex-shrink: 0; }
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 90; backdrop-filter: blur(2px); }
+
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
 
-    /* LAYOUT GRIDS (classes instead of inline for responsive control) */
-    .dash-grid    { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .menus-layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
-    .emp-layout   { display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start; }
-    .pref-grid    { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-
-    /* HAMBURGER (hidden on desktop) */
-    .hamburger {
-      display: none; align-items: center; justify-content: center;
-      width: 40px; height: 40px; background: var(--brown); border: none;
-      border-radius: 10px; cursor: pointer; font-size: 20px; color: var(--cream);
-      flex-shrink: 0;
-    }
-    /* SIDEBAR OVERLAY */
-    .sidebar-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.5); z-index: 90;
-      backdrop-filter: blur(2px);
-    }
-
-    /* ═══════════ RESPONSIVE ═══════════ */
+    @media (max-width: 1100px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 900px) {
-      /* Sidebar : masquée par défaut, glisse à l'ouverture */
       .sidebar { transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); }
       .sidebar.open { transform: translateX(0); }
       .sidebar-overlay.open { display: block; }
       .main { margin-left: 0; }
       .hamburger { display: flex; }
-      .topbar { padding: 14px 16px; gap: 12px; }
-      .topbar-title { font-size: 18px; }
-      .topbar-date { font-size: 11px; }
+      .topbar { padding: 12px 14px; gap: 10px; }
       .content { padding: 14px 12px; }
-
-      /* Stats : 2 colonnes */
-      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
-      .stat-number { font-size: 28px; }
-
-      /* Grids → colonne unique */
-      .dash-grid, .menus-layout, .emp-layout, .pref-grid { grid-template-columns: 1fr; }
-
-      /* Cards */
-      .card-header { padding: 14px 16px; flex-wrap: wrap; gap: 8px; }
-      .card-body { padding: 14px 16px; }
-      .card { margin-bottom: 16px; }
-
-      /* Boutons dans les cartes header */
-      .card-header .btn { font-size: 12px; padding: 6px 10px; }
-
-      /* Formulaire */
-      .form-row { grid-template-columns: 1fr; }
-
-      /* Table */
-      th, td { padding: 10px 10px; font-size: 12px; }
-
-      /* Toast */
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+      .stat-number { font-size: 26px; }
+      .dash-grid, .two-col, .pref-grid { grid-template-columns: 1fr; }
+      .form-row, .form-row-3 { grid-template-columns: 1fr; }
+      th, td { padding: 9px 10px; font-size: 11px; }
       .toast-container { top: auto; bottom: 16px; right: 12px; left: 12px; }
-      .toast { max-width: 100%; font-size: 13px; }
-
-      /* Modal */
-      .modal { margin: 12px; padding: 24px 20px; }
-
-      /* Validate buttons */
-      .btn-validate-row { flex-direction: column; }
-      .btn-validate-row .btn { width: 100%; justify-content: center; }
+      .toast { max-width: 100%; }
     }
-
     @media (max-width: 480px) {
-      /* Stats : 2 colonnes compactes */
       .stats-grid { gap: 8px; }
-      .stat-card { padding: 14px; }
-      .stat-number { font-size: 24px; }
-      .stat-icon { font-size: 20px; margin-bottom: 6px; }
-
-      /* Topbar très compact */
+      .stat-card { padding: 12px; }
       .topbar-date { display: none; }
     }
   </style>
 </head>
 <body>
-
-<!-- TOAST CONTAINER -->
 <div class="toast-container" id="toastContainer"></div>
-
-<!-- SIDEBAR OVERLAY (mobile) -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <span class="logo-icon">🍽</span>
+    <span class="logo-icon">🍽️</span>
     <div class="logo-name">Food<span>Choose</span></div>
     <span class="admin-badge">Admin</span>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section">Principal</div>
     <div class="nav-item active" data-page="dashboard"><span class="icon">📊</span> Tableau de bord</div>
-    <div class="nav-item" data-page="orders"><span class="icon">🗒</span> Commandes du jour</div>
+    <div class="nav-item" data-page="orders"><span class="icon">🗒️</span> Commandes du jour</div>
     <div class="nav-item" data-page="validate"><span class="icon">✅</span> Valider & Exporter</div>
+    <div class="nav-section">Menus</div>
+    <div class="nav-item" data-page="menus"><span class="icon">🍜</span> Menus plats</div>
+    <div class="nav-item" data-page="beverages"><span class="icon">🥤</span> Menus boissons</div>
     <div class="nav-section">Gestion</div>
-    <div class="nav-item" data-page="menus"><span class="icon">🍜</span> Gestion des menus</div>
-    <div class="nav-item" data-page="employees"><span class="icon">👥</span> Employés</div>
+    <div class="nav-item" data-page="employees"><span class="icon">👥</span> Utilisateurs</div>
     <div class="nav-section">Données</div>
-    <div class="nav-item" data-page="preferences"><span class="icon">☕</span> Préférences boissons</div>
+    <div class="nav-item" data-page="ratings"><span class="icon">⭐</span> Avis clients</div>
     <div class="nav-item" data-page="history"><span class="icon">📅</span> Historique</div>
   </nav>
   <div class="sidebar-footer">
     <div class="user-info">
       <div class="user-avatar">A</div>
-      <div>
-        <div class="user-name">Administrateur</div>
-        <div class="user-role">Chargé(e) de commande</div>
-      </div>
+      <div><div class="user-name">Administrateur</div><div class="user-role">Chargé(e) de commande</div></div>
     </div>
     <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
   </div>
 </aside>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <main class="main">
   <div class="topbar">
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
-    <div style="flex:1">
-      <div class="topbar-title" id="pageTitle">Tableau de bord</div>
-    </div>
+    <div style="flex:1"><div class="topbar-title" id="pageTitle">Tableau de bord</div></div>
     <div class="topbar-date" id="topbarDate"></div>
   </div>
 
@@ -364,24 +258,20 @@
     <!-- ═══ DASHBOARD ═══ -->
     <div class="page active" id="page-dashboard">
       <div class="stats-grid" id="statsGrid">
-        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-number" id="s-emp">—</div><div class="stat-label">Employés</div></div>
-        <div class="stat-card"><div class="stat-icon">🍜</div><div class="stat-number" id="s-menus">—</div><div class="stat-label">Menus aujourd'hui</div></div>
-        <div class="stat-card"><div class="stat-icon">🗒</div><div class="stat-number" id="s-orders">—</div><div class="stat-label">Commandes aujourd'hui</div></div>
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-number" id="s-emp">—</div><div class="stat-label">Utilisateurs</div></div>
+        <div class="stat-card"><div class="stat-icon">🍜</div><div class="stat-number" id="s-menus">—</div><div class="stat-label">Plats aujourd'hui</div></div>
+        <div class="stat-card"><div class="stat-icon">🥤</div><div class="stat-number" id="s-bevs">—</div><div class="stat-label">Boissons aujourd'hui</div></div>
+        <div class="stat-card"><div class="stat-icon">🗒️</div><div class="stat-number" id="s-orders">—</div><div class="stat-label">Commandes</div></div>
         <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-number" id="s-pending">—</div><div class="stat-label">En attente</div></div>
       </div>
-
       <div class="dash-grid">
         <div class="card">
-          <div class="card-header"><span class="card-title">Commandes du jour</span></div>
-          <div class="card-body" id="dashOrdersList">
-            <div class="empty-state"><span class="icon">🗒</span>Chargement...</div>
-          </div>
+          <div class="card-header"><span class="card-title">🗒️ Commandes du jour</span></div>
+          <div class="card-body" id="dashOrdersList"><div class="empty-state"><span class="icon">⏳</span>Chargement...</div></div>
         </div>
         <div class="card">
-          <div class="card-header"><span class="card-title">Préférences boissons</span></div>
-          <div class="card-body" id="dashPrefBars">
-            <div class="empty-state"><span class="icon">☕</span>Chargement...</div>
-          </div>
+          <div class="card-header"><span class="card-title">📅 Menus publiés par jour</span></div>
+          <div class="card-body" id="dashWeeklySummary"><div class="empty-state"><span class="icon">⏳</span>Chargement...</div></div>
         </div>
       </div>
     </div>
@@ -390,39 +280,34 @@
     <div class="page" id="page-orders">
       <div class="card">
         <div class="card-header">
-          <span class="card-title">Commandes des employés</span>
+          <span class="card-title">🗒️ Commandes des utilisateurs</span>
           <div class="date-filter">
-            <label style="font-size:12px;color:var(--muted)">Date :</label>
+            <label style="font-size:11px;color:var(--muted)">Date :</label>
             <input type="date" id="ordersDateFilter" onchange="loadOrders()">
           </div>
         </div>
         <div class="card-body">
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Employé</th><th>ID</th><th>Menu choisi</th><th>Statut</th><th>Heure</th></tr></thead>
-              <tbody id="ordersTableBody">
-                <tr><td colspan="5" class="empty-state">Chargement...</td></tr>
-              </tbody>
+              <thead><tr><th>Utilisateur</th><th>Organisation</th><th>Plat</th><th>Boisson</th><th>Type</th><th>Statut</th><th>Heure</th></tr></thead>
+              <tbody id="ordersTableBody"><tr><td colspan="7" class="empty-state">Chargement...</td></tr></tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ VALIDATE & EXPORT ═══ -->
+    <!-- ═══ VALIDATE ═══ -->
     <div class="page" id="page-validate">
       <div class="card" style="max-width:600px">
-        <div class="card-header"><span class="card-title">Validation et export PDF</span></div>
+        <div class="card-header"><span class="card-title">✅ Validation et export PDF</span></div>
         <div class="card-body">
           <div class="form-group">
             <label>Date de la commande</label>
-            <input type="date" class="form-control" id="validateDate" style="max-width:200px">
+            <input type="date" class="form-control" id="validateDate" style="max-width:200px" onchange="loadValidateSummary()">
           </div>
-          <p style="font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6">
-            Validez les commandes pour une journée donnée, puis téléchargez le récapitulatif en PDF.
-          </p>
-          <div id="validateSummary" style="background:#F9F1EB;border-radius:12px;padding:16px;margin-bottom:20px;font-size:14px;color:var(--brown)"></div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap" class="btn-validate-row">
+          <div id="validateSummary" style="background:#F9F1EB;border-radius:10px;padding:14px;margin-bottom:18px;font-size:13px;color:var(--brown)"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
             <button class="btn btn-success" onclick="validateOrders()">✅ Valider les commandes</button>
             <button class="btn btn-primary" onclick="exportPDF()">📄 Télécharger PDF</button>
           </div>
@@ -430,36 +315,151 @@
       </div>
     </div>
 
-    <!-- ═══ MENUS ═══ -->
+    <!-- ═══ MENUS PLATS ═══ -->
     <div class="page" id="page-menus">
-      <div class="menus-layout">
+      <div class="two-col">
         <div class="card">
-          <div class="card-header">
-            <span class="card-title">Liste des menus</span>
-          </div>
+          <div class="card-header"><span class="card-title">🍜 Plats par jour</span><button class="btn btn-outline btn-sm" onclick="loadMenus()">🔄 Actualiser</button></div>
           <div class="card-body">
+            <!-- Onglets jours -->
+            <div id="menuDayTabs" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+              <button class="day-tab-btn active" data-day="all" onclick="filterMenuDay('all')">📋 Tous</button>
+              <button class="day-tab-btn" data-day="lundi" onclick="filterMenuDay('lundi')">Lun</button>
+              <button class="day-tab-btn" data-day="mardi" onclick="filterMenuDay('mardi')">Mar</button>
+              <button class="day-tab-btn" data-day="mercredi" onclick="filterMenuDay('mercredi')">Mer</button>
+              <button class="day-tab-btn" data-day="jeudi" onclick="filterMenuDay('jeudi')">Jeu</button>
+              <button class="day-tab-btn" data-day="vendredi" onclick="filterMenuDay('vendredi')">Ven</button>
+              <button class="day-tab-btn" data-day="samedi" onclick="filterMenuDay('samedi')">Sam</button>
+              <button class="day-tab-btn" data-day="dimanche" onclick="filterMenuDay('dimanche')">Dim</button>
+              <button class="day-tab-btn" data-day="tous" onclick="filterMenuDay('tous')">📆 Tous les jours</button>
+            </div>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Nom du menu</th><th>Description</th><th>Disponible</th><th>Action</th></tr></thead>
-                <tbody id="menusTableBody">
-                  <tr><td colspan="4" class="empty-state">Chargement...</td></tr>
-                </tbody>
+                <thead><tr><th>Image</th><th>Nom / Description</th><th>Prix</th><th>Livraison</th><th>Jour</th><th>Dispo</th><th></th></tr></thead>
+                <tbody id="menusTableBody"><tr><td colspan="7" class="empty-state">Chargement...</td></tr></tbody>
               </table>
             </div>
           </div>
         </div>
         <div class="card">
-          <div class="card-header"><span class="card-title">Ajouter un menu</span></div>
+          <div class="card-header"><span class="card-title">➕ Ajouter un plat</span></div>
           <div class="card-body">
             <div class="form-group">
-              <label>Nom du menu *</label>
+              <label>🍽️ Photo du plat</label>
+              <div class="img-upload-area" id="menuImgArea" onclick="document.getElementById('menuImgFile').click()">
+                <input type="file" id="menuImgFile" accept="image/*" onchange="previewImage('menuImgFile','menuImgPreview','menuImgArea')">
+                <span class="upload-icon">📷</span>
+                <div class="upload-text">Cliquer pour choisir une image</div>
+                <img class="img-preview" id="menuImgPreview" alt="">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Nom du plat *</label>
               <input class="form-control" id="menuName" placeholder="Ex: Riz sauce graine">
             </div>
             <div class="form-group">
               <label>Description</label>
-              <textarea class="form-control" id="menuDesc" rows="3" placeholder="Détails optionnels..."></textarea>
+              <textarea class="form-control" id="menuDesc" rows="2" placeholder="Détails..."></textarea>
             </div>
-            <button class="btn btn-primary" onclick="addMenu()" style="width:100%">➕ Ajouter le menu</button>
+            <div class="form-row">
+              <div class="form-group">
+                <label>💰 Prix (FCFA)</label>
+                <input class="form-control" id="menuPrice" type="number" placeholder="1500">
+              </div>
+              <div class="form-group">
+                <label>🕐 Heure livraison</label>
+                <input class="form-control" id="menuDelivery" placeholder="environ 12h30">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>📅 Jour de la semaine</label>
+              <select class="form-control" id="menuDay">
+                <option value="tous">📆 Tous les jours</option>
+                <option value="lundi">Lundi</option>
+                <option value="mardi">Mardi</option>
+                <option value="mercredi">Mercredi</option>
+                <option value="jeudi">Jeudi</option>
+                <option value="vendredi">Vendredi</option>
+                <option value="samedi">Samedi</option>
+                <option value="dimanche">Dimanche</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="addMenu()" style="width:100%">➕ Ajouter ce plat</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ MENUS BOISSONS ═══ -->
+    <div class="page" id="page-beverages">
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header"><span class="card-title">🥤 Boissons par jour</span><button class="btn btn-outline btn-sm" onclick="loadBeverages()">🔄 Actualiser</button></div>
+          <div class="card-body">
+            <!-- Onglets jours -->
+            <div id="bevDayTabs" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+              <button class="day-tab-btn active" data-day="all" onclick="filterBevDay('all')">📋 Tous</button>
+              <button class="day-tab-btn" data-day="lundi" onclick="filterBevDay('lundi')">Lun</button>
+              <button class="day-tab-btn" data-day="mardi" onclick="filterBevDay('mardi')">Mar</button>
+              <button class="day-tab-btn" data-day="mercredi" onclick="filterBevDay('mercredi')">Mer</button>
+              <button class="day-tab-btn" data-day="jeudi" onclick="filterBevDay('jeudi')">Jeu</button>
+              <button class="day-tab-btn" data-day="vendredi" onclick="filterBevDay('vendredi')">Ven</button>
+              <button class="day-tab-btn" data-day="samedi" onclick="filterBevDay('samedi')">Sam</button>
+              <button class="day-tab-btn" data-day="dimanche" onclick="filterBevDay('dimanche')">Dim</button>
+              <button class="day-tab-btn" data-day="tous" onclick="filterBevDay('tous')">📆 Tous les jours</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Image</th><th>Nom / Description</th><th>Prix</th><th>Livraison</th><th>Jour</th><th>Dispo</th><th></th></tr></thead>
+                <tbody id="bevTableBody"><tr><td colspan="7" class="empty-state">Chargement...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">➕ Ajouter une boisson</span></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>📷 Photo de la boisson</label>
+              <div class="img-upload-area" id="bevImgArea" onclick="document.getElementById('bevImgFile').click()">
+                <input type="file" id="bevImgFile" accept="image/*" onchange="previewImage('bevImgFile','bevImgPreview','bevImgArea')">
+                <span class="upload-icon">🥤</span>
+                <div class="upload-text">Cliquer pour choisir une image</div>
+                <img class="img-preview" id="bevImgPreview" alt="">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Nom de la boisson *</label>
+              <input class="form-control" id="bevName" placeholder="Ex: Jus de mangue frais">
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea class="form-control" id="bevDesc" rows="2" placeholder="Détails..."></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>💰 Prix (FCFA)</label>
+                <input class="form-control" id="bevPrice" type="number" placeholder="500">
+              </div>
+              <div class="form-group">
+                <label>🕐 Heure livraison</label>
+                <input class="form-control" id="bevDelivery" placeholder="environ 12h00">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>📅 Jour de la semaine</label>
+              <select class="form-control" id="bevDay">
+                <option value="tous">📆 Tous les jours</option>
+                <option value="lundi">Lundi</option>
+                <option value="mardi">Mardi</option>
+                <option value="mercredi">Mercredi</option>
+                <option value="jeudi">Jeudi</option>
+                <option value="vendredi">Vendredi</option>
+                <option value="samedi">Samedi</option>
+                <option value="dimanche">Dimanche</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="addBeverage()" style="width:100%">➕ Ajouter cette boisson</button>
           </div>
         </div>
       </div>
@@ -467,46 +467,53 @@
 
     <!-- ═══ EMPLOYEES ═══ -->
     <div class="page" id="page-employees">
-      <div class="emp-layout">
+      <div class="two-col">
         <div class="card">
           <div class="card-header">
-            <span class="card-title">Liste des employés</span>
-            <span id="empCount" style="font-size:13px;color:var(--muted)"></span>
+            <span class="card-title">👥 Liste des utilisateurs</span>
+            <span id="empCount" style="font-size:12px;color:var(--muted)"></span>
           </div>
           <div class="card-body">
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Nom complet</th><th>Identifiant</th><th>Email</th><th>Boisson</th><th>Action</th></tr></thead>
-                <tbody id="empTableBody">
-                  <tr><td colspan="5" class="empty-state">Chargement...</td></tr>
-                </tbody>
+                <thead><tr><th>Nom</th><th>Identifiant</th><th>Email</th><th>Téléphone</th><th>Organisation</th><th></th></tr></thead>
+                <tbody id="empTableBody"><tr><td colspan="6" class="empty-state">Chargement...</td></tr></tbody>
               </table>
             </div>
           </div>
         </div>
         <div class="card">
-          <div class="card-header"><span class="card-title">Créer un compte employé</span></div>
+          <div class="card-header"><span class="card-title">👤 Créer un compte</span></div>
           <div class="card-body">
             <div class="form-row">
-              <div class="form-group">
-                <label>Prénom *</label>
-                <input class="form-control" id="empFirst" placeholder="Jean" oninput="suggestEmpId()">
-              </div>
-              <div class="form-group">
-                <label>Nom *</label>
-                <input class="form-control" id="empLast" placeholder="Dupont" oninput="suggestEmpId()">
-              </div>
+              <div class="form-group"><label>Prénom *</label><input class="form-control" id="empFirst" placeholder="Jean" oninput="suggestEmpId()"></div>
+              <div class="form-group"><label>Nom *</label><input class="form-control" id="empLast" placeholder="Dupont" oninput="suggestEmpId()"></div>
             </div>
-            <div class="form-group">
-              <label>Email *</label>
-              <input class="form-control" id="empEmail" type="email" placeholder="jean.dupont@entreprise.com">
+            <div class="form-group"><label>Email *</label><input class="form-control" id="empEmail" type="email" placeholder="jean.dupont@..."></div>
+            <div class="form-group"><label>📱 Téléphone</label><input class="form-control" id="empPhone" placeholder="+226 70 00 00 00"></div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Type organisation</label>
+                <select class="form-control" id="empCompanyType">
+                  <option value="">-- Aucun --</option>
+                  <option value="Entreprise">🏢 Entreprise</option>
+                  <option value="Hôpital">🏥 Hôpital</option>
+                  <option value="Pharmacie">💊 Pharmacie</option>
+                  <option value="Université">🎓 Université</option>
+                  <option value="École">🏫 École</option>
+                  <option value="Clinique">🩺 Clinique</option>
+                  <option value="Banque">🏦 Banque</option>
+                  <option value="Autre">📌 Autre</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Nom organisation</label><input class="form-control" id="empCompany" placeholder="Ex: CHU de Ouaga"></div>
             </div>
             <div class="form-group">
               <label>Identifiant proposé</label>
               <input class="form-control" id="empId" placeholder="jdupont">
-              <div style="font-size:11px;color:var(--muted);margin-top:4px">Modifiable — prénom+nom par défaut</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px">Auto-généré — modifiable</div>
             </div>
-            <div class="form-group" style="background:#F9F1EB;border-radius:10px;padding:12px;font-size:13px;color:var(--muted)">
+            <div style="background:#F9F1EB;border-radius:9px;padding:10px;font-size:12px;color:var(--muted);margin-bottom:12px">
               🔑 Mot de passe par défaut : <strong style="color:var(--brown)">Elimmeka123</strong><br>
               <span style="font-size:11px">Les identifiants seront envoyés par email.</span>
             </div>
@@ -516,19 +523,19 @@
       </div>
     </div>
 
-    <!-- ═══ PREFERENCES ═══ -->
-    <div class="page" id="page-preferences">
-      <div class="pref-grid">
-        <div class="card">
-          <div class="card-header"><span class="card-title">Préférences globales (profils)</span></div>
-          <div class="card-body" id="globalPrefContent">
-            <div class="empty-state"><span class="icon">☕</span>Chargement...</div>
-          </div>
+    <!-- ═══ RATINGS ═══ -->
+    <div class="page" id="page-ratings">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">⭐ Avis et notations des clients</span>
+          <button class="btn btn-outline btn-sm" onclick="loadRatings()">🔄 Actualiser</button>
         </div>
-        <div class="card">
-          <div class="card-header"><span class="card-title">Commandes d'aujourd'hui</span></div>
-          <div class="card-body" id="todayPrefContent">
-            <div class="empty-state"><span class="icon">🍵</span>Chargement...</div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Utilisateur</th><th>Plat</th><th>Note plat</th><th>Avis plat</th><th>Boisson</th><th>Note boisson</th><th>Avis boisson</th><th>Date</th></tr></thead>
+              <tbody id="ratingsTableBody"><tr><td colspan="8" class="empty-state">Chargement...</td></tr></tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -538,30 +545,28 @@
     <div class="page" id="page-history">
       <div class="card">
         <div class="card-header">
-          <span class="card-title">Historique global des commandes</span>
+          <span class="card-title">📅 Historique global</span>
           <button class="btn btn-outline btn-sm" onclick="loadHistory()">🔄 Actualiser</button>
         </div>
         <div class="card-body">
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Employé</th><th>ID</th><th>Menu</th><th>Date repas</th><th>Boisson</th><th>Action</th><th>Horodatage</th></tr></thead>
-              <tbody id="histTableBody">
-                <tr><td colspan="7" class="empty-state">Chargement...</td></tr>
-              </tbody>
+              <thead><tr><th>Utilisateur</th><th>ID</th><th>Plat</th><th>Boisson</th><th>Type</th><th>Date repas</th><th>Action</th><th>Horodatage</th></tr></thead>
+              <tbody id="histTableBody"><tr><td colspan="8" class="empty-state">Chargement...</td></tr></tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
 
-  </div><!-- /content -->
+  </div>
 </main>
 
 <!-- CONFIRM MODAL -->
 <div class="modal-overlay" id="confirmModal">
   <div class="modal">
     <div class="modal-title" id="confirmTitle">Confirmer</div>
-    <p id="confirmMsg" style="font-size:14px;color:var(--muted);line-height:1.6"></p>
+    <p id="confirmMsg" style="font-size:13px;color:var(--muted);line-height:1.6"></p>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
       <button class="btn btn-danger" id="confirmBtn" onclick="confirmAction()">Confirmer</button>
@@ -573,30 +578,24 @@
 const API = '';
 let token = localStorage.getItem('fc_token');
 let pendingAction = null;
+let menuImgBase64 = null;
+let bevImgBase64 = null;
+let allMenusData = [];
+let allBevData = [];
+let activeMenuDay = 'all';
+let activeBevDay = 'all';
 
-// Auth guard
-if (!token || localStorage.getItem('fc_role') !== 'admin') {
-  window.location.href = '/';
-}
+if (!token || localStorage.getItem('fc_role') !== 'admin') window.location.href = '/';
 
-// Headers
-function headers() {
-  return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
-}
+function headers() { return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }; }
 
-// Fetch wrapper — redirige vers login si token invalide (401)
 async function apiFetch(url, options = {}) {
   options.headers = { ...headers(), ...(options.headers || {}) };
   const res = await fetch(url, options);
-  if (res.status === 401) {
-    localStorage.clear();
-    window.location.href = '/';
-    return null;
-  }
+  if (res.status === 401) { localStorage.clear(); window.location.href = '/'; return null; }
   return res;
 }
 
-// Toast
 function toast(msg, type = 'info') {
   const c = document.getElementById('toastContainer');
   const t = document.createElement('div');
@@ -606,23 +605,41 @@ function toast(msg, type = 'info') {
   setTimeout(() => t.remove(), 3500);
 }
 
-// Logout
-function logout() {
-  localStorage.clear();
-  window.location.href = '/';
+function logout() { localStorage.clear(); window.location.href = '/'; }
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebarOverlay').classList.toggle('open'); }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('open'); }
+
+// IMAGE COMPRESSION
+function compressImage(file, cb) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      const maxW = 700, maxH = 500;
+      const ratio = Math.min(maxW / img.width, maxH / img.height, 1);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * ratio;
+      canvas.height = img.height * ratio;
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      cb(canvas.toDataURL('image/jpeg', 0.75));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
 }
 
-// Sidebar mobile
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sidebarOverlay').classList.toggle('open');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('open');
+function previewImage(inputId, previewId, areaId) {
+  const file = document.getElementById(inputId).files[0];
+  if (!file) return;
+  compressImage(file, (b64) => {
+    const prev = document.getElementById(previewId);
+    prev.src = b64; prev.style.display = 'block';
+    if (inputId === 'menuImgFile') menuImgBase64 = b64;
+    if (inputId === 'bevImgFile') bevImgBase64 = b64;
+  });
 }
 
-// Navigation
+// NAVIGATION
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
     const page = item.dataset.page;
@@ -630,24 +647,22 @@ document.querySelectorAll('.nav-item').forEach(item => {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     item.classList.add('active');
     document.getElementById(`page-${page}`).classList.add('active');
-    const titles = { dashboard:'Tableau de bord', orders:'Commandes du jour', validate:'Valider & Exporter', menus:'Gestion des menus', employees:'Employés', preferences:'Préférences boissons', history:'Historique' };
-    document.getElementById('pageTitle').textContent = titles[page];
+    const titles = { dashboard:'📊 Tableau de bord', orders:'🗒️ Commandes du jour', validate:'✅ Valider & Exporter', menus:'🍜 Menus plats', beverages:'🥤 Menus boissons', employees:'👥 Utilisateurs', ratings:'⭐ Avis clients', history:'📅 Historique' };
+    document.getElementById('pageTitle').textContent = titles[page] || page;
     closeSidebar();
     if (page === 'dashboard') loadDashboard();
     else if (page === 'orders') loadOrders();
-    else if (page === 'menus') { loadMenus(); }
+    else if (page === 'menus') loadMenus();
+    else if (page === 'beverages') loadBeverages();
     else if (page === 'employees') loadEmployees();
-    else if (page === 'preferences') loadPreferences();
+    else if (page === 'ratings') loadRatings();
     else if (page === 'history') loadHistory();
     else if (page === 'validate') { document.getElementById('validateDate').value = todayStr(); loadValidateSummary(); }
   });
 });
 
-function todayStr() {
-  return new Date().toISOString().split('T')[0];
-}
+function todayStr() { return new Date().toISOString().split('T')[0]; }
 
-// Init date display
 function initDates() {
   const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
   document.getElementById('topbarDate').textContent = new Date().toLocaleDateString('fr-FR', opts);
@@ -655,64 +670,65 @@ function initDates() {
   document.getElementById('validateDate').value = todayStr();
 }
 
-// ══════ DASHBOARD ══════
+// ══ DASHBOARD ══
 async function loadDashboard() {
   try {
-    const [r1, r2, r3] = await Promise.all([
+    const [r1, r2] = await Promise.all([
       apiFetch(`${API}/api/admin/stats`),
-      apiFetch(`${API}/api/admin/orders?date=${todayStr()}`),
-      apiFetch(`${API}/api/admin/preferences`)
+      apiFetch(`${API}/api/admin/orders?date=${todayStr()}`)
     ]);
-    if (!r1 || !r2 || !r3) return;
-    const [stats, orders, prefs] = await Promise.all([r1.json(), r2.json(), r3.json()]);
+    if (!r1 || !r2) return;
+    const [stats, orders] = await Promise.all([r1.json(), r2.json()]);
     document.getElementById('s-emp').textContent = stats.employees || 0;
     document.getElementById('s-menus').textContent = stats.todayMenus || 0;
+    document.getElementById('s-bevs').textContent = stats.todayBeverages || 0;
     document.getElementById('s-orders').textContent = stats.todayOrders || 0;
     document.getElementById('s-pending').textContent = stats.pendingOrders || 0;
 
-    // Orders list
     const ol = document.getElementById('dashOrdersList');
-    if (!orders.length) { ol.innerHTML = '<div class="empty-state"><span class="icon">🗒</span>Aucune commande</div>'; }
+    if (!orders.length) { ol.innerHTML = '<div class="empty-state"><span class="icon">🗒️</span>Aucune commande</div>'; }
     else {
       ol.innerHTML = orders.slice(0, 8).map(o => `
         <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
           <div>
-            <div style="font-weight:600;font-size:14px">${o.first_name} ${o.last_name}</div>
-            <div style="font-size:12px;color:var(--muted)">${o.menu_name}</div>
+            <div style="font-weight:600;font-size:13px">${o.first_name} ${o.last_name}</div>
+            <div style="font-size:11px;color:var(--muted)">${o.menu_name || ''}${o.menu_name && o.beverage_name ? ' + ' : ''}${o.beverage_name || ''}</div>
           </div>
           <span class="badge badge-${o.status}">${o.status === 'validated' ? '✓ Validé' : '⏳ En attente'}</span>
         </div>
       `).join('');
     }
-
-    // Pref bars
-    const pd = document.getElementById('dashPrefBars');
-    renderPrefBars(pd, prefs.today);
-  } catch(e) { toast('Erreur chargement tableau de bord', 'error'); }
+    renderWeeklySummary(stats.weeklyMenus || {}, stats.weeklyBeverages || {});
+  } catch(e) { toast('Erreur tableau de bord', 'error'); }
 }
 
-function renderPrefBars(container, data) {
-  const total = (data.lipton || 0) + (data.nescafe || 0) + (data.both || 0);
-  if (!total) { container.innerHTML = '<div class="empty-state"><span class="icon">☕</span>Aucune préférence enregistrée</div>'; return; }
-  const pct = (v) => total ? Math.round((v/total)*100) : 0;
+function renderWeeklySummary(menus, bevs) {
+  const container = document.getElementById('dashWeeklySummary');
+  const days = [
+    { key:'lundi',    label:'Lun' },
+    { key:'mardi',    label:'Mar' },
+    { key:'mercredi', label:'Mer' },
+    { key:'jeudi',    label:'Jeu' },
+    { key:'vendredi', label:'Ven' },
+    { key:'samedi',   label:'Sam' },
+    { key:'dimanche', label:'Dim' },
+    { key:'tous',     label:'📆 Tous jours' }
+  ];
   container.innerHTML = `
-    <div class="pref-bar-wrap">
-      <div class="pref-label"><span>🍵 Lipton</span><span>${data.lipton || 0} (${pct(data.lipton)}%)</span></div>
-      <div class="pref-bar-bg"><div class="pref-bar-fill fill-lipton" style="width:${pct(data.lipton)}%"></div></div>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:12px">Nombre de plats 🍜 et boissons 🥤 disponibles par jour</p>
+    <div class="weekly-grid">
+      ${days.map(d => `
+        <div class="weekly-cell">
+          <div class="wday">${d.label}</div>
+          <div class="wcount">${(menus[d.key]||0) + (bevs[d.key]||0)}</div>
+          <div class="wtype">🍜${menus[d.key]||0} &nbsp; 🥤${bevs[d.key]||0}</div>
+        </div>
+      `).join('')}
     </div>
-    <div class="pref-bar-wrap">
-      <div class="pref-label"><span>☕ Nescafé</span><span>${data.nescafe || 0} (${pct(data.nescafe)}%)</span></div>
-      <div class="pref-bar-bg"><div class="pref-bar-fill fill-nescafe" style="width:${pct(data.nescafe)}%"></div></div>
-    </div>
-    <div class="pref-bar-wrap">
-      <div class="pref-label"><span>🍵☕ Les deux</span><span>${data.both || 0} (${pct(data.both)}%)</span></div>
-      <div class="pref-bar-bg"><div class="pref-bar-fill fill-both" style="width:${pct(data.both)}%"></div></div>
-    </div>
-    <div style="margin-top:12px;font-size:12px;color:var(--muted);text-align:right">Total: ${total} choix</div>
   `;
 }
 
-// ══════ ORDERS ══════
+// ══ ORDERS ══
 async function loadOrders() {
   const date = document.getElementById('ordersDateFilter').value || todayStr();
   try {
@@ -720,21 +736,25 @@ async function loadOrders() {
     if (!r) return;
     const orders = await r.json();
     const tbody = document.getElementById('ordersTableBody');
-    if (!orders.length) { tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><span class="icon">🗒</span>Aucune commande pour cette date</div></td></tr>'; return; }
+    if (!orders.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><span class="icon">🗒️</span>Aucune commande</div></td></tr>'; return; }
+    const typeLabel = { food:'🍜 Plat', drink:'🥤 Boisson', both:'🍽️ Les deux' };
     tbody.innerHTML = orders.map(o => {
       const time = new Date(o.updated_at).toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+      const org = [o.company_type, o.company_name].filter(Boolean).join(' — ') || '—';
       return `<tr>
-        <td><strong>${o.first_name} ${o.last_name}</strong></td>
-        <td style="color:var(--muted);font-size:12px">${o.employee_id}</td>
-        <td>${o.menu_name}</td>
+        <td><strong>${o.first_name} ${o.last_name}</strong><br><span style="font-size:11px;color:var(--muted)">${o.employee_id}</span></td>
+        <td style="font-size:12px;color:var(--muted)">${org}</td>
+        <td>${o.menu_name || '<span style="color:var(--muted)">—</span>'}</td>
+        <td>${o.beverage_name || '<span style="color:var(--muted)">—</span>'}</td>
+        <td><span class="badge badge-${o.order_type||'food'}">${typeLabel[o.order_type||'food']||o.order_type}</span></td>
         <td><span class="badge badge-${o.status}">${o.status === 'validated' ? '✓ Validé' : '⏳ En attente'}</span></td>
-        <td style="color:var(--muted);font-size:12px">${time}</td>
+        <td style="color:var(--muted);font-size:11px">${time}</td>
       </tr>`;
     }).join('');
-  } catch(e) { toast('Erreur chargement commandes', 'error'); }
+  } catch(e) { toast('Erreur commandes', 'error'); }
 }
 
-// ══════ VALIDATE ══════
+// ══ VALIDATE ══
 async function loadValidateSummary() {
   const date = document.getElementById('validateDate').value || todayStr();
   try {
@@ -743,124 +763,216 @@ async function loadValidateSummary() {
     const orders = await r.json();
     const pending = orders.filter(o => o.status === 'pending').length;
     const validated = orders.filter(o => o.status === 'validated').length;
-    document.getElementById('validateSummary').innerHTML = `
-      📊 <strong>${orders.length}</strong> commande(s) total — 
-      <span style="color:#16a34a">✓ ${validated} validée(s)</span> — 
-      <span style="color:#E85A2A">⏳ ${pending} en attente</span>
-    `;
-  } catch(e) {}
+    document.getElementById('validateSummary').innerHTML = `📊 <strong>${orders.length}</strong> commande(s) — <span style="color:#16a34a">✅ ${validated} validée(s)</span> — <span style="color:#E85A2A">⏳ ${pending} en attente</span>`;
+  } catch(e) { document.getElementById('validateSummary').textContent = 'Impossible de charger le résumé.'; }
 }
 
 async function validateOrders() {
   const date = document.getElementById('validateDate').value || todayStr();
+  if (!confirm(`Valider toutes les commandes en attente du ${date} ?`)) return;
   try {
     const res = await apiFetch(`${API}/api/admin/orders/validate`, { method:'POST', body: JSON.stringify({ date }) });
+    if (!res) return;
     const data = await res.json();
-    toast(data.message, 'success');
+    if (!res.ok) throw new Error(data.error || 'Erreur lors de la validation');
+    toast(data.message || `${data.validated} commande(s) validée(s)`, 'success');
     loadValidateSummary();
-  } catch(e) { toast('Erreur validation', 'error'); }
+  } catch(e) { toast(e.message || 'Erreur validation', 'error'); }
 }
 
 function exportPDF() {
   const date = document.getElementById('validateDate').value || todayStr();
-  window.open(`${API}/api/admin/export-pdf?date=${date}&token=${token}`, '_blank');
-  // Token in URL for PDF download
-  const link = document.createElement('a');
-  link.href = `/api/admin/export-pdf?date=${date}`;
-  // Use fetch with auth header instead
   fetch(`${API}/api/admin/export-pdf?date=${date}`, { headers: headers() })
-    .then(r => r.blob())
+    .then(async r => {
+      if (!r.ok) {
+        const err = await r.json().catch(() => ({}));
+        throw new Error(err.error || `Erreur serveur (${r.status})`);
+      }
+      return r.blob();
+    })
     .then(blob => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = `commandes_${date}.pdf`;
-      a.click(); URL.revokeObjectURL(url);
-    }).catch(() => toast('Erreur export PDF', 'error'));
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }).catch(e => toast(e.message || 'Erreur export PDF', 'error'));
 }
 
-// ══════ MENUS ══════
+// ══ MENUS ══
+function dayLabel(d) {
+  const m = { tous:'📆 Tous', lundi:'Lun', mardi:'Mar', mercredi:'Mer', jeudi:'Jeu', vendredi:'Ven', samedi:'Sam', dimanche:'Dim' };
+  return m[d] || d;
+}
+
 async function loadMenus() {
   try {
     const r = await apiFetch(`${API}/api/admin/menus`);
     if (!r) return;
-    const menus = await r.json();
-    const tbody = document.getElementById('menusTableBody');
-    if (!menus.length) { tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><span class="icon">🍜</span>Aucun menu enregistré</div></td></tr>'; return; }
-    tbody.innerHTML = menus.map(m => `
-      <tr id="menu-row-${m.id}">
-        <td><strong>${m.name}</strong></td>
-        <td style="color:var(--muted);font-size:13px">${m.description || '—'}</td>
-        <td>
-          <button class="toggle-avail ${m.available ? 'on' : ''}" title="${m.available ? 'Disponible — cliquer pour désactiver' : 'Indisponible — cliquer pour activer'}" onclick="toggleAvailability(${m.id}, ${m.available})"></button>
-          <span style="font-size:12px;color:${m.available ? 'var(--success)' : 'var(--danger)'};margin-left:6px">${m.available ? 'Disponible' : 'Indisponible'}</span>
-        </td>
-        <td><button class="btn btn-danger btn-sm" onclick="deleteMenu(${m.id})">🗑</button></td>
-      </tr>
-    `).join('');
-  } catch(e) { toast('Erreur chargement menus', 'error'); }
+    allMenusData = await r.json();
+    renderMenusTable(allMenusData);
+  } catch(e) { toast('Erreur menus', 'error'); }
+}
+
+function renderMenusTable(menus) {
+  const filtered = activeMenuDay === 'all' ? menus : menus.filter(m => m.day_of_week === activeMenuDay);
+  const tbody = document.getElementById('menusTableBody');
+  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><span class="icon">🍜</span>Aucun plat pour ce jour</div></td></tr>'; return; }
+  tbody.innerHTML = filtered.map(m => `
+    <tr id="menu-row-${m.id}">
+      <td>${m.image_url ? `<img src="${m.image_url}" style="width:48px;height:48px;object-fit:cover;border-radius:8px">` : '<div class="menu-item-img-placeholder">🍜</div>'}</td>
+      <td><strong style="font-size:13px">${m.name}</strong>${m.description ? `<br><span style="font-size:11px;color:var(--muted)">${m.description.substring(0,50)}</span>` : ''}</td>
+      <td style="font-size:12px">${m.price ? `<strong>${Number(m.price).toLocaleString('fr-FR')} FCFA</strong>` : '—'}</td>
+      <td style="font-size:12px;color:var(--muted)">${m.delivery_time || '—'}</td>
+      <td><span style="background:#F9F1EB;padding:2px 8px;border-radius:20px;font-size:11px">${dayLabel(m.day_of_week)}</span></td>
+      <td><button class="toggle-avail ${m.available?'on':''}" onclick="toggleMenuAvail(${m.id},${m.available})"></button></td>
+      <td><button class="btn btn-danger btn-sm" onclick="deleteMenu(${m.id})">🗑️</button></td>
+    </tr>
+  `).join('');
+}
+
+function filterMenuDay(day) {
+  activeMenuDay = day;
+  document.querySelectorAll('#menuDayTabs .day-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.day === day));
+  if (day !== 'all') document.getElementById('menuDay').value = day;
+  renderMenusTable(allMenusData);
 }
 
 async function addMenu() {
   const name = document.getElementById('menuName').value.trim();
-  const desc = document.getElementById('menuDesc').value.trim();
-  if (!name) { toast('Nom du menu requis', 'error'); return; }
+  if (!name) { toast('Nom du plat requis', 'error'); return; }
   try {
-    const res = await apiFetch(`${API}/api/admin/menus`, { method:'POST', body: JSON.stringify({ name, description: desc }) });
+    const res = await apiFetch(`${API}/api/admin/menus`, { method:'POST', body: JSON.stringify({
+      name, description: document.getElementById('menuDesc').value.trim(),
+      imageUrl: menuImgBase64 || null,
+      price: document.getElementById('menuPrice').value || null,
+      deliveryTime: document.getElementById('menuDelivery').value.trim(),
+      dayOfWeek: document.getElementById('menuDay').value
+    })});
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
-    toast(`Menu "${name}" ajouté`, 'success');
-    document.getElementById('menuName').value = '';
-    document.getElementById('menuDesc').value = '';
+    toast(`🍜 "${name}" ajouté !`, 'success');
+    document.getElementById('menuName').value = ''; document.getElementById('menuDesc').value = '';
+    document.getElementById('menuPrice').value = ''; document.getElementById('menuDelivery').value = '';
+    document.getElementById('menuDay').value = 'tous';
+    document.getElementById('menuImgPreview').style.display = 'none'; menuImgBase64 = null;
     loadMenus();
   } catch(e) { toast(e.message, 'error'); }
 }
 
-async function deleteMenu(id) {
-  if (!confirm('Supprimer ce menu ?')) return;
+async function toggleMenuAvail(id, current) {
   try {
-    await apiFetch(`${API}/api/admin/menus/${id}`, { method:'DELETE' });
-    toast('Menu supprimé', 'success');
-    loadMenus();
-  } catch(e) { toast('Erreur suppression', 'error'); }
-}
-
-async function toggleAvailability(id, currentAvailable) {
-  const newValue = !currentAvailable;
-  try {
-    const r = await apiFetch(`${API}/api/admin/menus/${id}/availability`, {
-      method: 'PATCH', body: JSON.stringify({ available: newValue })
-    });
+    const r = await apiFetch(`${API}/api/admin/menus/${id}/availability`, { method:'PATCH', body: JSON.stringify({ available: !current }) });
     if (!r) return;
-    toast(newValue ? '✅ Menu rendu disponible' : '🚫 Menu rendu indisponible', newValue ? 'success' : 'info');
+    toast(!current ? '✅ Plat rendu disponible' : '🚫 Plat rendu indisponible', 'info');
     loadMenus();
-  } catch(e) { toast('Erreur mise à jour disponibilité', 'error'); }
+  } catch(e) { toast('Erreur', 'error'); }
 }
 
-// ══════ EMPLOYEES ══════
+async function deleteMenu(id) {
+  if (!confirm('Supprimer ce plat ?')) return;
+  await apiFetch(`${API}/api/admin/menus/${id}`, { method:'DELETE' });
+  toast('Plat supprimé', 'success'); loadMenus();
+}
+
+// ══ BEVERAGES ══
+async function loadBeverages() {
+  try {
+    const r = await apiFetch(`${API}/api/admin/beverages`);
+    if (!r) return;
+    allBevData = await r.json();
+    renderBevTable(allBevData);
+  } catch(e) { toast('Erreur boissons', 'error'); }
+}
+
+function renderBevTable(bevs) {
+  const filtered = activeBevDay === 'all' ? bevs : bevs.filter(b => b.day_of_week === activeBevDay);
+  const tbody = document.getElementById('bevTableBody');
+  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><span class="icon">🥤</span>Aucune boisson pour ce jour</div></td></tr>'; return; }
+  tbody.innerHTML = filtered.map(b => `
+    <tr>
+      <td>${b.image_url ? `<img src="${b.image_url}" style="width:48px;height:48px;object-fit:cover;border-radius:8px">` : '<div class="menu-item-img-placeholder">🥤</div>'}</td>
+      <td><strong style="font-size:13px">${b.name}</strong>${b.description ? `<br><span style="font-size:11px;color:var(--muted)">${b.description.substring(0,50)}</span>` : ''}</td>
+      <td style="font-size:12px">${b.price ? `<strong>${Number(b.price).toLocaleString('fr-FR')} FCFA</strong>` : '—'}</td>
+      <td style="font-size:12px;color:var(--muted)">${b.delivery_time || '—'}</td>
+      <td><span style="background:#F9F1EB;padding:2px 8px;border-radius:20px;font-size:11px">${dayLabel(b.day_of_week)}</span></td>
+      <td><button class="toggle-avail ${b.available?'on':''}" onclick="toggleBevAvail(${b.id},${b.available})"></button></td>
+      <td><button class="btn btn-danger btn-sm" onclick="deleteBev(${b.id})">🗑️</button></td>
+    </tr>
+  `).join('');
+}
+
+function filterBevDay(day) {
+  activeBevDay = day;
+  document.querySelectorAll('#bevDayTabs .day-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.day === day));
+  if (day !== 'all') document.getElementById('bevDay').value = day;
+  renderBevTable(allBevData);
+}
+
+async function addBeverage() {
+  const name = document.getElementById('bevName').value.trim();
+  if (!name) { toast('Nom de la boisson requis', 'error'); return; }
+  try {
+    const res = await apiFetch(`${API}/api/admin/beverages`, { method:'POST', body: JSON.stringify({
+      name, description: document.getElementById('bevDesc').value.trim(),
+      imageUrl: bevImgBase64 || null,
+      price: document.getElementById('bevPrice').value || null,
+      deliveryTime: document.getElementById('bevDelivery').value.trim(),
+      dayOfWeek: document.getElementById('bevDay').value
+    })});
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    toast(`🥤 "${name}" ajoutée !`, 'success');
+    document.getElementById('bevName').value = ''; document.getElementById('bevDesc').value = '';
+    document.getElementById('bevPrice').value = ''; document.getElementById('bevDelivery').value = '';
+    document.getElementById('bevDay').value = 'tous';
+    document.getElementById('bevImgPreview').style.display = 'none'; bevImgBase64 = null;
+    loadBeverages();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+async function toggleBevAvail(id, current) {
+  try {
+    const r = await apiFetch(`${API}/api/admin/beverages/${id}/availability`, { method:'PATCH', body: JSON.stringify({ available: !current }) });
+    if (!r) return;
+    toast(!current ? '✅ Boisson rendue disponible' : '🚫 Boisson rendue indisponible', 'info');
+    loadBeverages();
+  } catch(e) { toast('Erreur', 'error'); }
+}
+
+async function deleteBev(id) {
+  if (!confirm('Supprimer cette boisson ?')) return;
+  await apiFetch(`${API}/api/admin/beverages/${id}`, { method:'DELETE' });
+  toast('Boisson supprimée', 'success'); loadBeverages();
+}
+
+// ══ EMPLOYEES ══
 async function loadEmployees() {
   try {
     const r = await apiFetch(`${API}/api/admin/employees`);
     if (!r) return;
     const emps = await r.json();
-    document.getElementById('empCount').textContent = `${emps.length} employé(s)`;
+    document.getElementById('empCount').textContent = `${emps.length} utilisateur(s)`;
     const tbody = document.getElementById('empTableBody');
-    if (!emps.length) { tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><span class="icon">👥</span>Aucun employé</div></td></tr>'; return; }
-    tbody.innerHTML = emps.map(e => {
-      const drinkLabel = { lipton:'🍵 Lipton', nescafe:'☕ Nescafé', both:'🍵☕ Les deux' }[e.drink_preference] || '—';
-      return `<tr>
+    if (!emps.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><span class="icon">👥</span>Aucun utilisateur</div></td></tr>'; return; }
+    tbody.innerHTML = emps.map(e => `
+      <tr>
         <td><strong>${e.first_name} ${e.last_name}</strong></td>
-        <td><code style="background:#F9F1EB;padding:2px 8px;border-radius:6px;font-size:12px">${e.employee_id}</code></td>
-        <td style="font-size:13px;color:var(--muted)">${e.email}</td>
-        <td style="font-size:13px">${drinkLabel}</td>
-        <td><button class="btn btn-danger btn-sm" onclick="deleteEmployee(${e.id}, '${e.first_name} ${e.last_name}')">🗑</button></td>
-      </tr>`;
-    }).join('');
-  } catch(e) { toast('Erreur chargement employés', 'error'); }
+        <td><code style="background:#F9F1EB;padding:2px 7px;border-radius:5px;font-size:11px">${e.employee_id}</code></td>
+        <td style="font-size:12px;color:var(--muted)">${e.email}</td>
+        <td style="font-size:12px">${e.phone_number || '—'}</td>
+        <td style="font-size:12px">${[e.company_type, e.company_name].filter(Boolean).join(' — ') || '—'}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteEmployee(${e.id},'${e.first_name} ${e.last_name}')">🗑️</button></td>
+      </tr>
+    `).join('');
+  } catch(e) { toast('Erreur utilisateurs', 'error'); }
 }
 
 function suggestEmpId() {
-  const first = document.getElementById('empFirst').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'');
-  const last = document.getElementById('empLast').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'');
+  const first = document.getElementById('empFirst').value.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,'');
+  const last = document.getElementById('empLast').value.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,'');
   if (first || last) document.getElementById('empId').value = first.charAt(0) + last;
 }
 
@@ -869,76 +981,93 @@ async function createEmployee() {
   const lastName = document.getElementById('empLast').value.trim();
   const email = document.getElementById('empEmail').value.trim();
   const employeeId = document.getElementById('empId').value.trim();
-  if (!firstName || !lastName || !email || !employeeId) { toast('Tous les champs sont requis', 'error'); return; }
+  if (!firstName || !lastName || !email || !employeeId) { toast('Champs obligatoires manquants', 'error'); return; }
   try {
-    const res = await apiFetch(`${API}/api/admin/employees`, { method:'POST', body: JSON.stringify({ firstName, lastName, email, employeeId }) });
+    const res = await apiFetch(`${API}/api/admin/employees`, { method:'POST', body: JSON.stringify({
+      firstName, lastName, email, employeeId,
+      phoneNumber: document.getElementById('empPhone').value.trim(),
+      companyName: document.getElementById('empCompany').value.trim(),
+      companyType: document.getElementById('empCompanyType').value
+    })});
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
-    toast(`Compte de ${firstName} ${lastName} créé !`, 'success');
-    document.getElementById('empFirst').value = '';
-    document.getElementById('empLast').value = '';
-    document.getElementById('empEmail').value = '';
-    document.getElementById('empId').value = '';
+    toast(`👤 Compte de ${firstName} créé !`, 'success');
+    ['empFirst','empLast','empEmail','empId','empPhone','empCompany'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('empCompanyType').value = '';
     loadEmployees();
   } catch(e) { toast(e.message, 'error'); }
 }
 
 async function deleteEmployee(id, name) {
-  if (!confirm(`Supprimer l'employé "${name}" ? Cette action est irréversible.`)) return;
-  try {
-    await apiFetch(`${API}/api/admin/employees/${id}`, { method:'DELETE' });
-    toast(`Employé "${name}" supprimé`, 'success');
-    loadEmployees();
-  } catch(e) { toast('Erreur suppression', 'error'); }
+  if (!confirm(`Supprimer l'utilisateur "${name}" ? Irréversible.`)) return;
+  await apiFetch(`${API}/api/admin/employees/${id}`, { method:'DELETE' });
+  toast(`"${name}" supprimé`, 'success'); loadEmployees();
 }
 
-// ══════ PREFERENCES ══════
-async function loadPreferences() {
+// ══ RATINGS ══
+async function loadRatings() {
   try {
-    const r = await apiFetch(`${API}/api/admin/preferences`);
+    const r = await apiFetch(`${API}/api/admin/ratings`);
     if (!r) return;
-    const prefs = await r.json();
-    renderPrefBars(document.getElementById('globalPrefContent'), prefs.global);
-    renderPrefBars(document.getElementById('todayPrefContent'), prefs.today);
-  } catch(e) { toast('Erreur chargement préférences', 'error'); }
+    const ratings = await r.json();
+    const tbody = document.getElementById('ratingsTableBody');
+    if (!ratings.length) { tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><span class="icon">⭐</span>Aucun avis pour le moment</div></td></tr>'; return; }
+    tbody.innerHTML = ratings.map(rat => {
+      const fStars = rat.food_rating ? renderStars(rat.food_rating) : '—';
+      const dStars = rat.drink_rating ? renderStars(rat.drink_rating) : '—';
+      const ts = new Date(rat.created_at).toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'2-digit' });
+      return `<tr>
+        <td><strong>${rat.first_name} ${rat.last_name}</strong><br><span style="font-size:11px;color:var(--muted)">${rat.employee_id}</span></td>
+        <td style="font-size:12px">${rat.menu_name || '—'}</td>
+        <td>${fStars}</td>
+        <td style="font-size:12px;color:var(--muted);max-width:150px;white-space:normal">${rat.food_comment || '—'}</td>
+        <td style="font-size:12px">${rat.beverage_name || '—'}</td>
+        <td>${dStars}</td>
+        <td style="font-size:12px;color:var(--muted);max-width:150px;white-space:normal">${rat.drink_comment || '—'}</td>
+        <td style="font-size:11px;color:var(--muted)">${ts}</td>
+      </tr>`;
+    }).join('');
+  } catch(e) { toast('Erreur avis', 'error'); }
 }
 
-// ══════ HISTORY ══════
+function renderStars(n) {
+  let s = '';
+  for (let i = 1; i <= 5; i++) s += `<span class="star ${i <= n ? '' : 'empty'}">★</span>`;
+  return `<div class="stars">${s}</div>`;
+}
+
+// ══ HISTORY ══
 async function loadHistory() {
   try {
     const r = await apiFetch(`${API}/api/admin/history`);
     if (!r) return;
     const history = await r.json();
     const tbody = document.getElementById('histTableBody');
-    if (!history.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><span class="icon">📅</span>Aucun historique</div></td></tr>'; return; }
-    const actionLabels = { created:'➕ Créé', updated:'✏️ Modifié', deleted:'🗑 Supprimé', validated:'✅ Validé' };
-    const actionColors = { created:'#D1FAE5', updated:'#DBEAFE', deleted:'#FEE2E2', validated:'#D1FAE5' };
-    const actionTextColors = { created:'#065F46', updated:'#1E40AF', deleted:'#991B1B', validated:'#065F46' };
+    if (!history.length) { tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><span class="icon">📅</span>Aucun historique</div></td></tr>'; return; }
+    const aL = { created:'➕ Créé', updated:'✏️ Modifié', deleted:'🗑️ Supprimé', validated:'✅ Validé' };
+    const aBg = { created:'#D1FAE5', updated:'#DBEAFE', deleted:'#FEE2E2', validated:'#D1FAE5' };
+    const aTx = { created:'#065F46', updated:'#1E40AF', deleted:'#991B1B', validated:'#065F46' };
+    const tL = { food:'🍜 Plat', drink:'🥤 Boisson', both:'🍽️ Les deux' };
     tbody.innerHTML = history.map(h => {
-      const drinkLabel = { lipton:'🍵', nescafe:'☕', both:'🍵☕' }[h.drink_preference] || '—';
       const ts = new Date(h.action_timestamp).toLocaleString('fr-FR', { day:'2-digit', month:'2-digit', year:'2-digit', hour:'2-digit', minute:'2-digit' });
       const date = new Date(h.order_date + 'T12:00:00').toLocaleDateString('fr-FR');
-      const aLabel = actionLabels[h.action] || h.action;
-      const aBg = actionColors[h.action] || '#F3F4F6';
-      const aTxt = actionTextColors[h.action] || '#374151';
       return `<tr>
-        <td><strong>${h.employee_name || '—'}</strong></td>
-        <td style="font-size:12px;color:var(--muted)">${h.employee_id || '—'}</td>
-        <td>${h.menu_name || '—'}</td>
-        <td style="font-size:12px">${date}</td>
-        <td>${drinkLabel}</td>
-        <td><span style="background:${aBg};color:${aTxt};padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600">${aLabel}</span></td>
-        <td style="font-size:11px;color:var(--muted)">${ts}</td>
+        <td><strong>${h.employee_name||'—'}</strong></td>
+        <td style="font-size:11px;color:var(--muted)">${h.employee_id||'—'}</td>
+        <td style="font-size:12px">${h.menu_name||'—'}</td>
+        <td style="font-size:12px">${h.beverage_name||'—'}</td>
+        <td style="font-size:11px">${tL[h.order_type]||h.order_type||'—'}</td>
+        <td style="font-size:11px">${date}</td>
+        <td><span style="background:${aBg[h.action]||'#F3F4F6'};color:${aTx[h.action]||'#374151'};padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600">${aL[h.action]||h.action}</span></td>
+        <td style="font-size:10px;color:var(--muted)">${ts}</td>
       </tr>`;
     }).join('');
   } catch(e) { toast('Erreur historique', 'error'); }
 }
 
-// Modal helpers
 function closeModal() { document.getElementById('confirmModal').classList.remove('open'); }
 function confirmAction() { if (pendingAction) { pendingAction(); pendingAction = null; } closeModal(); }
 
-// INIT
 initDates();
 loadDashboard();
 </script>

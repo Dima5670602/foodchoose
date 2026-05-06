@@ -17,123 +17,51 @@
     body { font-family: 'DM Sans', sans-serif; background: #F5EDE6; color: var(--text); display: flex; min-height: 100vh; }
 
     /* SIDEBAR */
-    .sidebar {
-      width: var(--sidebar-w); background: var(--brown); min-height: 100vh;
-      position: fixed; left: 0; top: 0; z-index: 100;
-      display: flex; flex-direction: column;
-      box-shadow: 4px 0 20px rgba(0,0,0,0.15);
-    }
-    .sidebar-logo {
-      padding: 28px 24px 20px;
-      border-bottom: 1px solid rgba(255,248,243,0.08);
-    }
-    .sidebar-logo .logo-icon { font-size: 28px; margin-bottom: 6px; display: block; }
-    .sidebar-logo .logo-name {
-      font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900;
-      color: var(--cream); letter-spacing: -0.3px;
-    }
+    .sidebar { width: var(--sidebar-w); background: var(--brown); min-height: 100vh; position: fixed; left: 0; top: 0; z-index: 100; display: flex; flex-direction: column; box-shadow: 4px 0 20px rgba(0,0,0,0.15); }
+    .sidebar-logo { padding: 26px 22px 18px; border-bottom: 1px solid rgba(255,248,243,0.08); }
+    .sidebar-logo .logo-icon { font-size: 26px; margin-bottom: 4px; display: block; }
+    .sidebar-logo .logo-name { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 900; color: var(--cream); }
     .sidebar-logo .logo-name span { color: var(--orange); }
-    .sidebar-nav { flex: 1; padding: 16px 0; }
-    .nav-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 24px; cursor: pointer;
-      color: rgba(255,248,243,0.55); font-size: 14px; font-weight: 500;
-      transition: all 0.2s; border-left: 3px solid transparent;
-      user-select: none;
-    }
-    .nav-item .icon { font-size: 18px; width: 22px; text-align: center; }
+    .sidebar-nav { flex: 1; padding: 14px 0; }
+    .nav-item { display: flex; align-items: center; gap: 11px; padding: 12px 22px; cursor: pointer; color: rgba(255,248,243,0.55); font-size: 13px; font-weight: 500; transition: all 0.2s; border-left: 3px solid transparent; user-select: none; }
+    .nav-item .icon { font-size: 17px; width: 20px; text-align: center; }
     .nav-item:hover { color: var(--cream); background: rgba(255,248,243,0.05); }
     .nav-item.active { color: var(--cream); background: rgba(232,90,42,0.15); border-left-color: var(--orange); }
-    .sidebar-footer {
-      padding: 16px 24px; border-top: 1px solid rgba(255,248,243,0.08);
-    }
-    .user-info { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .user-avatar {
-      width: 36px; height: 36px; background: var(--orange); border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700; color: white;
-    }
+    .sidebar-footer { padding: 14px 22px; border-top: 1px solid rgba(255,248,243,0.08); }
+    .user-info { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .user-avatar { width: 34px; height: 34px; background: var(--orange); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: white; }
     .user-name { font-size: 13px; font-weight: 600; color: var(--cream); }
     .user-role { font-size: 11px; color: var(--muted); }
-    .btn-logout {
-      width: 100%; padding: 9px; background: rgba(232,90,42,0.15);
-      border: 1px solid rgba(232,90,42,0.3); color: var(--orange);
-      border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500;
-      font-family: 'DM Sans', sans-serif; transition: all 0.2s;
-    }
+    .btn-logout { width: 100%; padding: 8px; background: rgba(232,90,42,0.15); border: 1px solid rgba(232,90,42,0.3); color: var(--orange); border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
     .btn-logout:hover { background: rgba(232,90,42,0.25); }
 
     /* MAIN */
     .main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
-    .topbar {
-      background: var(--cream); padding: 20px 32px; display: flex;
-      align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50;
-    }
-    .topbar-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--brown); }
-    .topbar-date { font-size: 13px; color: var(--muted); }
-    .content { padding: 28px 32px; }
+    .topbar { background: var(--cream); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; }
+    .topbar-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--brown); }
+    .topbar-date { font-size: 12px; color: var(--muted); }
+    .content { padding: 24px 28px; }
 
-    /* PAGE VISIBILITY */
+    /* PAGES */
     .page { display: none; }
     .page.active { display: block; animation: pageIn 0.3s ease both; }
-    @keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* MENU CARDS */
-    .menus-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
-    .menu-card {
-      background: var(--cream); border: 2px solid var(--border); border-radius: 16px;
-      padding: 20px; cursor: pointer; transition: all 0.2s; position: relative;
-    }
-    .menu-card:hover { border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(232,90,42,0.12); }
-    .menu-card.selected { border-color: var(--orange); background: #FFF0EA; }
-    .menu-card.selected::after {
-      content: '✓'; position: absolute; top: 12px; right: 12px;
-      width: 24px; height: 24px; background: var(--orange); color: white;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700;
-    }
-    .menu-card.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
-    .menu-icon { font-size: 32px; margin-bottom: 10px; }
-    .menu-name { font-weight: 700; font-size: 15px; color: var(--brown); margin-bottom: 4px; }
-    .menu-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
-
-    /* DRINK SELECTOR */
-    .drink-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
-    .drink-card {
-      background: var(--cream); border: 2px solid var(--border); border-radius: 14px;
-      padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.2s;
-    }
-    .drink-card:hover { border-color: var(--orange); }
-    .drink-card.selected { border-color: var(--orange); background: #FFF0EA; }
-    .drink-card .d-icon { font-size: 28px; margin-bottom: 6px; }
-    .drink-card .d-name { font-size: 13px; font-weight: 600; color: var(--brown); }
-
-    /* CURRENT ORDER BANNER */
-    .order-banner {
-      background: linear-gradient(135deg, var(--orange), #D14D22);
-      border-radius: 16px; padding: 20px 24px; color: white;
-      margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .order-banner .ob-title { font-size: 12px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
-    .order-banner .ob-menu { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
-    .order-banner .ob-meta { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+    @keyframes pageIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
 
     /* CARDS */
-    .card { background: var(--cream); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 24px; }
-    .card-header { padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
-    .card-title { font-size: 15px; font-weight: 600; color: var(--brown); }
-    .card-body { padding: 20px 24px; }
+    .card { background: var(--cream); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 20px; }
+    .card-header { padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 8px; }
+    .card-title { font-size: 14px; font-weight: 600; color: var(--brown); }
+    .card-body { padding: 18px 22px; }
 
     /* TABLE */
     .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th { text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; background: #F9F1EB; border-bottom: 1px solid var(--border); }
-    td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 9px 12px; font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; background: #F9F1EB; border-bottom: 1px solid var(--border); }
+    td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: rgba(232,90,42,0.03); }
-    .empty-state { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
-    .empty-state .icon { font-size: 36px; margin-bottom: 10px; display: block; }
+    .empty-state { text-align: center; padding: 36px; color: var(--muted); font-size: 13px; }
+    .empty-state .icon { font-size: 32px; margin-bottom: 8px; display: block; }
 
     /* BUTTONS */
     .btn { padding: 9px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
@@ -141,123 +69,129 @@
     .btn-primary:hover { background: #D14D22; transform: translateY(-1px); }
     .btn-danger { background: #dc2626; color: white; }
     .btn-danger:hover { background: #b91c1c; }
+    .btn-success { background: #16a34a; color: white; }
+    .btn-success:hover { background: #15803d; }
     .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
     .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
-    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    .btn-sm { padding: 5px 11px; font-size: 11px; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
-    /* ACTION BAR */
-    .action-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    /* BADGES */
+    .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-pending { background: #FEF3C7; color: #92400E; }
+    .badge-validated { background: #D1FAE5; color: #065F46; }
+
+    /* ORDER TYPE TABS */
+    .order-tabs { display: flex; background: #F0E6DE; border-radius: 12px; padding: 4px; margin-bottom: 20px; }
+    .order-tab-btn { flex: 1; padding: 10px 8px; border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--muted); border-radius: 9px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .order-tab-btn.active { background: white; color: var(--brown); box-shadow: 0 2px 8px rgba(44,24,16,0.12); }
+
+    /* MENU/BEVERAGE CARDS */
+    .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .item-card {
+      background: var(--cream); border: 2px solid var(--border); border-radius: 14px;
+      cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+    }
+    .item-card:hover { border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(232,90,42,0.12); }
+    .item-card.selected { border-color: var(--orange); background: #FFF0EA; }
+    .item-card.selected::after { content: '✓'; position: absolute; top: 10px; right: 10px; width: 24px; height: 24px; background: var(--orange); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+    .item-card.disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+    .item-img { width: 100%; height: 120px; object-fit: cover; display: block; }
+    .item-img-placeholder { width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 40px; background: linear-gradient(135deg, #F9F1EB, #F0E6DE); }
+    .item-info { padding: 12px; }
+    .item-name { font-weight: 700; font-size: 13px; color: var(--brown); margin-bottom: 3px; }
+    .item-desc { font-size: 11px; color: var(--muted); line-height: 1.4; margin-bottom: 6px; }
+    .item-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .item-price { background: #D1FAE5; color: #065F46; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+    .item-time { background: #DBEAFE; color: #1D4ED8; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+
+    /* ORDER BANNER */
+    .order-banner {
+      background: linear-gradient(135deg, var(--orange), #D14D22);
+      border-radius: 14px; padding: 18px 22px; color: white;
+      margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .ob-title { font-size: 11px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+    .ob-content { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; }
+    .ob-meta { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+
+    /* FORM */
+    .form-label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .form-group { margin-bottom: 18px; }
+    .form-input { width: 100%; padding: 13px 16px; background: white; border: 2px solid var(--border); border-radius: 12px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text); transition: all 0.2s; outline: none; }
+    .form-input:focus { border-color: var(--orange); box-shadow: 0 0 0 4px rgba(232,90,42,0.1); }
+    .form-input::placeholder { color: #C4A898; }
+    select.form-input { cursor: pointer; }
+
+    /* STAR RATING */
+    .star-rating { display: flex; gap: 6px; margin: 10px 0; }
+    .star-btn { font-size: 28px; cursor: pointer; color: #D1BAB0; transition: all 0.15s; background: none; border: none; padding: 2px; line-height: 1; }
+    .star-btn:hover, .star-btn.active { color: #F9C74F; transform: scale(1.1); }
+    .star-display { display: inline-flex; gap: 2px; }
+    .star-d { color: #F9C74F; font-size: 14px; }
+    .star-d.empty { color: #D1BAB0; }
 
     /* TOAST */
     .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
-    .toast { background: var(--brown); color: var(--cream); padding: 14px 20px; border-radius: 12px; font-size: 14px; max-width: 320px; animation: toastIn 0.3s ease both; box-shadow: 0 8px 24px rgba(0,0,0,0.25); display: flex; align-items: center; gap: 10px; }
+    .toast { background: var(--brown); color: var(--cream); padding: 13px 18px; border-radius: 12px; font-size: 13px; max-width: 320px; animation: toastIn 0.3s ease both; box-shadow: 0 8px 24px rgba(0,0,0,0.25); display: flex; align-items: center; gap: 8px; }
     .toast.success { border-left: 4px solid #16a34a; }
     .toast.error { border-left: 4px solid #dc2626; }
     .toast.info { border-left: 4px solid var(--orange); }
-    @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes toastIn { from { opacity:0; transform: translateX(20px); } to { opacity:1; transform: translateX(0); } }
 
-    /* STATUS BADGES */
-    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.3px; }
-    .badge-pending { background: #FEF3C7; color: #92400E; }
-    .badge-validated { background: #D1FAE5; color: #065F46; }
+    /* HAMBURGER */
+    .hamburger { display: none; align-items: center; justify-content: center; width: 38px; height: 38px; background: var(--brown); border: none; border-radius: 9px; cursor: pointer; font-size: 18px; color: var(--cream); flex-shrink: 0; }
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 90; backdrop-filter: blur(2px); }
+
+    /* RATING CARD */
+    .rating-card { background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+    .rating-card.rated { border-color: #D1FAE5; background: #F0FDF4; }
 
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
 
-    /* FORM (password page) */
-    .form-label { display:block; font-size:11px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
-    .form-group { margin-bottom:20px; }
-    .form-input { width:100%; padding:14px 18px; background:white; border:2px solid var(--border); border-radius:12px; font-size:15px; font-family:'DM Sans',sans-serif; color:var(--text); transition:all 0.2s; outline:none; }
-    .form-input:focus { border-color:var(--orange); box-shadow:0 0 0 4px rgba(232,90,42,0.1); }
-    .form-input::placeholder { color:#C4A898; }
-
-    /* HAMBURGER (hidden on desktop) */
-    .hamburger {
-      display: none; align-items: center; justify-content: center;
-      width: 40px; height: 40px; background: var(--brown); border: none;
-      border-radius: 10px; cursor: pointer; font-size: 20px; color: var(--cream);
-      flex-shrink: 0;
-    }
-    /* SIDEBAR OVERLAY */
-    .sidebar-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.5); z-index: 90;
-      backdrop-filter: blur(2px);
-    }
-
-    /* ═══════════ RESPONSIVE ═══════════ */
     @media (max-width: 900px) {
       .sidebar { transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); }
       .sidebar.open { transform: translateX(0); }
       .sidebar-overlay.open { display: block; }
       .main { margin-left: 0; }
       .hamburger { display: flex; }
-      .topbar { padding: 14px 16px; gap: 12px; }
-      .topbar-title { font-size: 18px; }
-      .topbar-date { font-size: 11px; }
+      .topbar { padding: 12px 14px; gap: 10px; }
       .content { padding: 14px 12px; }
-
-      .card-header { padding: 14px 16px; flex-wrap: wrap; gap: 8px; }
+      .items-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+      .order-banner { flex-direction: column; align-items: flex-start; }
+      .card-header { padding: 13px 16px; }
       .card-body { padding: 14px 16px; }
-      .card { margin-bottom: 16px; }
-
-      .menus-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-      .menu-card { padding: 16px 12px; }
-      .menu-icon { font-size: 26px; }
-      .menu-name { font-size: 13px; }
-
-      .drink-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      .drink-card { padding: 12px 8px; }
-      .drink-card .d-icon { font-size: 22px; }
-      .drink-card .d-name { font-size: 12px; }
-
-      .action-bar { flex-direction: column; }
-      .action-bar .btn { width: 100%; justify-content: center; }
-
-      .order-banner { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .order-banner > div:last-child { width: 100%; display: flex; gap: 8px; }
-      .order-banner > div:last-child .btn { flex: 1; justify-content: center; }
-
-      th, td { padding: 10px 10px; font-size: 12px; }
-
+      th, td { padding: 9px 10px; font-size: 11px; }
       .toast-container { top: auto; bottom: 16px; right: 12px; left: 12px; }
-      .toast { max-width: 100%; font-size: 13px; }
     }
-
     @media (max-width: 480px) {
       .topbar-date { display: none; }
-      .menus-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .drink-grid { gap: 6px; }
+      .items-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .order-tabs { font-size: 11px; }
     }
   </style>
 </head>
 <body>
-
 <div class="toast-container" id="toastContainer"></div>
-
-<!-- SIDEBAR OVERLAY (mobile) -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <span class="logo-icon">🍽</span>
+    <span class="logo-icon">🍽️</span>
     <div class="logo-name">Food<span>Choose</span></div>
   </div>
   <nav class="sidebar-nav">
-    <div class="nav-item active" data-page="order"><span class="icon">🍜</span> Choisir mon repas</div>
-    <div class="nav-item" data-page="preference"><span class="icon">☕</span> Préférence boisson</div>
+    <div class="nav-item active" data-page="order"><span class="icon">🍽️</span> Mon repas du jour</div>
+    <div class="nav-item" data-page="ratings"><span class="icon">⭐</span> Mes avis</div>
     <div class="nav-item" data-page="history"><span class="icon">📅</span> Mon historique</div>
-    <div class="nav-item" data-page="password"><span class="icon">🔑</span> Changer mot de passe</div>
+    <div class="nav-item" data-page="profile"><span class="icon">👤</span> Mon profil</div>
   </nav>
   <div class="sidebar-footer">
     <div class="user-info">
       <div class="user-avatar" id="userAvatar">?</div>
-      <div>
-        <div class="user-name" id="sidebarName">—</div>
-        <div class="user-role" id="sidebarId">—</div>
-      </div>
+      <div><div class="user-name" id="sidebarName">—</div><div class="user-role" id="sidebarOrg">—</div></div>
     </div>
     <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
   </div>
@@ -267,14 +201,8 @@
 <main class="main">
   <div class="topbar">
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
-    <div style="flex:1">
-      <div class="topbar-title" id="pageTitle">Choisir mon repas</div>
-    </div>
+    <div style="flex:1"><div class="topbar-title" id="pageTitle">Mon repas du jour</div></div>
     <div class="topbar-date" id="topbarDate"></div>
-    <div style="display:flex;gap:8px;margin-left:12px">
-      <button class="btn btn-outline btn-sm" onclick="goHome()" title="Accueil">🏠 Accueil</button>
-      <button class="btn btn-sm" style="background:rgba(220,38,38,0.1);color:#dc2626;border:1.5px solid rgba(220,38,38,0.25)" onclick="logout()" title="Déconnexion">🚪 Déconnexion</button>
-    </div>
   </div>
 
   <div class="content">
@@ -282,84 +210,70 @@
     <!-- ═══ ORDER PAGE ═══ -->
     <div class="page active" id="page-order">
 
-      <!-- Current order banner (if exists) -->
+      <!-- Current order banner -->
       <div id="currentOrderBanner" style="display:none"></div>
 
       <div class="card">
         <div class="card-header">
-          <span class="card-title">🍜 Menus du jour</span>
-          <span id="menuDateLabel" style="font-size:13px;color:var(--muted)"></span>
+          <span class="card-title">🍽️ Menu du jour</span>
+          <span id="menuDateLabel" style="font-size:12px;color:var(--muted)"></span>
         </div>
         <div class="card-body">
-          <div id="menusGrid" class="menus-grid">
-            <div class="empty-state" style="grid-column:1/-1"><span class="icon">⏳</span>Chargement des menus...</div>
+
+          <!-- Type selector -->
+          <div id="orderTypeSection">
+            <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Choisissez ce que vous souhaitez commander aujourd'hui :</p>
+            <div class="order-tabs" id="orderTypeTabs">
+              <button class="order-tab-btn active" data-type="food" onclick="setOrderType('food')">🍜 Plat seulement</button>
+              <button class="order-tab-btn" data-type="both" onclick="setOrderType('both')">🍽️ Plat + Boisson</button>
+              <button class="order-tab-btn" data-type="drink" onclick="setOrderType('drink')">🥤 Boisson seulement</button>
+            </div>
           </div>
 
-          <div class="action-bar" id="orderActions" style="display:none">
+          <!-- Food section -->
+          <div id="foodSection">
+            <h3 style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px">🍜 Choisir un plat</h3>
+            <div id="menusGrid" class="items-grid">
+              <div class="empty-state" style="grid-column:1/-1"><span class="icon">⏳</span>Chargement...</div>
+            </div>
+          </div>
+
+          <!-- Drink section -->
+          <div id="drinkSection" style="display:none">
+            <h3 style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;margin-top:20px">🥤 Choisir une boisson</h3>
+            <div id="beveragesGrid" class="items-grid">
+              <div class="empty-state" style="grid-column:1/-1"><span class="icon">⏳</span>Chargement...</div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div id="orderActions" style="display:none;margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
             <button class="btn btn-primary" id="submitOrderBtn" onclick="submitOrder()">✅ Confirmer ma commande</button>
           </div>
-
-          <!-- Edit mode actions -->
-          <div class="action-bar" id="editActions" style="display:none">
-            <button class="btn btn-primary" onclick="updateOrder()">💾 Enregistrer les modifications</button>
-            <button class="btn btn-danger" onclick="deleteOrder()">🗑 Supprimer ma commande</button>
+          <div id="editActions" style="display:none;margin-top:16px;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="updateOrder()">💾 Enregistrer</button>
+            <button class="btn btn-danger" onclick="deleteOrder()">🗑️ Supprimer</button>
             <button class="btn btn-outline" onclick="cancelEdit()">✕ Annuler</button>
           </div>
-        </div>
-      </div>
 
-    </div>
-
-    <!-- ═══ PREFERENCE PAGE ═══ -->
-    <div class="page" id="page-preference">
-      <div class="card" style="max-width:480px">
-        <div class="card-header"><span class="card-title">☕ Ma préférence boisson</span></div>
-        <div class="card-body">
-          <p style="font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6">
-            Choisissez votre préférence de boisson habituelle. Elle sera pré-sélectionnée lors de vos commandes.
-          </p>
-          <div class="drink-grid">
-            <div class="drink-card" data-drink="lipton" onclick="selectGlobalDrink('lipton')">
-              <div class="d-icon">🍵</div>
-              <div class="d-name">Lipton</div>
-            </div>
-            <div class="drink-card" data-drink="nescafe" onclick="selectGlobalDrink('nescafe')">
-              <div class="d-icon">☕</div>
-              <div class="d-name">Nescafé</div>
-            </div>
-            <div class="drink-card" data-drink="both" onclick="selectGlobalDrink('both')">
-              <div class="d-icon">🍵☕</div>
-              <div class="d-name">Les deux</div>
-            </div>
-          </div>
-          <div id="currentPrefLabel" style="margin-top:16px;font-size:14px;color:var(--muted);text-align:center"></div>
-          <button class="btn btn-primary" onclick="saveGlobalPreference()" style="width:100%;margin-top:16px">💾 Enregistrer</button>
         </div>
       </div>
     </div>
 
-    <!-- ═══ PASSWORD PAGE ═══ -->
-    <div class="page" id="page-password">
-      <div class="card" style="max-width:480px">
-        <div class="card-header"><span class="card-title">🔑 Changer mon mot de passe</span></div>
+    <!-- ═══ RATINGS PAGE ═══ -->
+    <div class="page" id="page-ratings">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">⭐ Mes avis sur les repas</span>
+          <button class="btn btn-outline btn-sm" onclick="loadRatingsPage()">🔄 Actualiser</button>
+        </div>
         <div class="card-body">
-          <p style="font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6">
-            Modifiez votre mot de passe par défaut. Le nouveau mot de passe doit contenir au moins 6 caractères.
+          <p style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6">
+            Notez vos repas validés de 1 à 5 étoiles et laissez un commentaire pour aider à l'amélioration. ⭐ = pas terrible, ⭐⭐⭐⭐⭐ = exquis !
           </p>
-          <div class="form-group">
-            <label class="form-label" for="currentPassword">Mot de passe actuel</label>
-            <input class="form-input" type="password" id="currentPassword" placeholder="Votre mot de passe actuel" autocomplete="current-password">
+          <div id="ratingsContainer">
+            <div class="empty-state"><span class="icon">⭐</span>Chargement...</div>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="newPassword">Nouveau mot de passe</label>
-            <input class="form-input" type="password" id="newPassword" placeholder="Nouveau mot de passe (min. 6 caractères)" autocomplete="new-password">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="confirmPassword">Confirmer le nouveau mot de passe</label>
-            <input class="form-input" type="password" id="confirmPassword" placeholder="Répétez le nouveau mot de passe" autocomplete="new-password">
-          </div>
-          <div id="pwdError" style="display:none;background:#FEE2E2;color:#991B1B;border-radius:10px;padding:12px 16px;font-size:13px;margin-bottom:16px;border:1px solid #FCA5A5"></div>
-          <button class="btn btn-primary" onclick="changePassword()" style="width:100%">🔑 Changer le mot de passe</button>
         </div>
       </div>
     </div>
@@ -371,19 +285,74 @@
           <span class="card-title">📅 Historique de mes commandes</span>
           <div style="display:flex;gap:8px">
             <button class="btn btn-outline btn-sm" onclick="loadHistory()">🔄 Actualiser</button>
-            <button class="btn btn-danger btn-sm" onclick="clearHistory()">🗑 Vider l'historique</button>
+            <button class="btn btn-danger btn-sm" onclick="clearHistory()">🗑️ Vider</button>
           </div>
         </div>
         <div class="card-body">
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Menu</th><th>Date du repas</th><th>Boisson</th><th>Action</th><th>Date/Heure</th><th>Suppr.</th></tr></thead>
-              <tbody id="histTableBody">
-                <tr><td colspan="6"><div class="empty-state"><span class="icon">📅</span>Chargement...</div></td></tr>
-              </tbody>
+              <thead><tr><th>Plat</th><th>Boisson</th><th>Type</th><th>Date repas</th><th>Statut</th><th>Horodatage</th><th></th></tr></thead>
+              <tbody id="histTableBody"><tr><td colspan="7"><div class="empty-state"><span class="icon">📅</span>Chargement...</div></td></tr></tbody>
             </table>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ═══ PROFILE PAGE ═══ -->
+    <div class="page" id="page-profile">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px">
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">👤 Mes informations</span></div>
+          <div class="card-body">
+            <div id="profileInfo" style="margin-bottom:20px;padding:14px;background:#F9F1EB;border-radius:10px;font-size:13px;line-height:1.8"></div>
+            <div class="form-group">
+              <label class="form-label" for="profPhone">📱 Téléphone</label>
+              <input class="form-input" type="tel" id="profPhone" placeholder="+226 70 00 00 00">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="profCompanyType">Type organisation</label>
+              <select class="form-input" id="profCompanyType">
+                <option value="">-- Aucun --</option>
+                <option value="Entreprise">🏢 Entreprise</option>
+                <option value="Hôpital">🏥 Hôpital</option>
+                <option value="Pharmacie">💊 Pharmacie</option>
+                <option value="Université">🎓 Université</option>
+                <option value="École">🏫 École</option>
+                <option value="Clinique">🩺 Clinique</option>
+                <option value="Banque">🏦 Banque</option>
+                <option value="Autre">📌 Autre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="profCompany">Nom de l'organisation</label>
+              <input class="form-input" type="text" id="profCompany" placeholder="Ex: CHU de Ouagadougou">
+            </div>
+            <button class="btn btn-primary" onclick="saveProfile()" style="width:100%">💾 Enregistrer le profil</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">🔑 Changer le mot de passe</span></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label" for="currentPassword">Mot de passe actuel</label>
+              <input class="form-input" type="password" id="currentPassword" placeholder="Mot de passe actuel" autocomplete="current-password">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="newPassword">Nouveau mot de passe</label>
+              <input class="form-input" type="password" id="newPassword" placeholder="Min. 6 caractères" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="confirmPassword">Confirmer</label>
+              <input class="form-input" type="password" id="confirmPassword" placeholder="Répéter" autocomplete="new-password">
+            </div>
+            <div id="pwdError" style="display:none;background:#FEE2E2;color:#991B1B;border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:14px;border:1px solid #FCA5A5"></div>
+            <button class="btn btn-primary" onclick="changePassword()" style="width:100%">🔑 Changer le mot de passe</button>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -395,27 +364,21 @@ const API = '';
 let token = localStorage.getItem('fc_token');
 let currentOrder = null;
 let selectedMenuId = null;
-let globalDrink = null;
+let selectedBevId = null;
+let orderType = 'food';
 let editMode = false;
 let profile = null;
+let allMenus = [];
+let allBevs = [];
 
-// Auth guard
-if (!token || localStorage.getItem('fc_role') !== 'employee') {
-  window.location.href = '/';
-}
+if (!token || localStorage.getItem('fc_role') !== 'employee') window.location.href = '/';
 
-function headers() {
-  return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
-}
+function headers() { return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }; }
 
 async function apiFetch(url, options = {}) {
   options.headers = { ...headers(), ...(options.headers || {}) };
   const res = await fetch(url, options);
-  if (res.status === 401) {
-    localStorage.clear();
-    window.location.href = '/';
-    return null;
-  }
+  if (res.status === 401) { localStorage.clear(); window.location.href = '/'; return null; }
   return res;
 }
 
@@ -429,31 +392,14 @@ function toast(msg, type = 'info') {
 }
 
 function logout() { localStorage.clear(); window.location.href = '/'; }
-function goHome() {
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelector('[data-page="order"]').classList.add('active');
-  document.getElementById('page-order').classList.add('active');
-  document.getElementById('pageTitle').textContent = 'Choisir mon repas';
-  loadOrderPage();
-}
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebarOverlay').classList.toggle('open'); }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('open'); }
 
-// Sidebar mobile
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sidebarOverlay').classList.toggle('open');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('open');
-}
-
-// Sidebar user info
-const name = localStorage.getItem('fc_name') || '—';
-const eid = localStorage.getItem('fc_eid') || '—';
-document.getElementById('sidebarName').textContent = name;
-document.getElementById('sidebarId').textContent = eid;
-document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+// Init user info
+const userName = localStorage.getItem('fc_name') || '—';
+const userEid = localStorage.getItem('fc_eid') || '—';
+document.getElementById('sidebarName').textContent = userName;
+document.getElementById('userAvatar').textContent = userName.charAt(0).toUpperCase();
 
 // Navigation
 document.querySelectorAll('.nav-item').forEach(item => {
@@ -463,164 +409,261 @@ document.querySelectorAll('.nav-item').forEach(item => {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     item.classList.add('active');
     document.getElementById(`page-${page}`).classList.add('active');
-    const titles = { order:'Choisir mon repas', preference:'Préférence boisson', history:'Mon historique', password:'Changer mot de passe' };
-    document.getElementById('pageTitle').textContent = titles[page];
+    const titles = { order:'🍽️ Mon repas du jour', ratings:'⭐ Mes avis', history:'📅 Mon historique', profile:'👤 Mon profil' };
+    document.getElementById('pageTitle').textContent = titles[page] || page;
     closeSidebar();
     if (page === 'order') loadOrderPage();
-    else if (page === 'preference') loadPreferencePage();
+    else if (page === 'ratings') loadRatingsPage();
     else if (page === 'history') loadHistory();
-    else if (page === 'password') resetPasswordForm();
+    else if (page === 'profile') loadProfile();
   });
 });
 
 function todayStr() { return new Date().toISOString().split('T')[0]; }
 
-// Init
 function init() {
   const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
-  document.getElementById('topbarDate').textContent = new Date().toLocaleDateString('fr-FR', opts);
-  document.getElementById('menuDateLabel').textContent = new Date().toLocaleDateString('fr-FR', opts);
+  const dateStr = new Date().toLocaleDateString('fr-FR', opts);
+  document.getElementById('topbarDate').textContent = dateStr;
+  document.getElementById('menuDateLabel').textContent = dateStr;
   loadOrderPage();
-  loadProfile();
+  loadProfileQuiet();
 }
 
-async function loadProfile() {
+async function loadProfileQuiet() {
   try {
-    const rp = await apiFetch(`${API}/api/employee/profile`);
-    if (!rp) return;
-    profile = await rp.json();
-    if (profile.drink_preference) {
-      globalDrink = profile.drink_preference;
-      updateGlobalDrinkUI();
+    const r = await apiFetch(`${API}/api/employee/profile`);
+    if (!r) return;
+    profile = await r.json();
+    if (profile) {
+      const org = [profile.company_type, profile.company_name].filter(Boolean).join(' — ');
+      document.getElementById('sidebarOrg').textContent = org || userEid;
     }
   } catch(e) {}
 }
 
-// ══════ ORDER PAGE ══════
+// ══ ORDER PAGE ══
+
+function setOrderType(type) {
+  orderType = type;
+  document.querySelectorAll('.order-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.type === type));
+  document.getElementById('foodSection').style.display = (type === 'food' || type === 'both') ? 'block' : 'none';
+  document.getElementById('drinkSection').style.display = (type === 'drink' || type === 'both') ? 'block' : 'none';
+
+  if (type === 'drink' || type === 'both') {
+    renderBeverages(allBevs, currentOrder);
+  }
+  if (type === 'food' || type === 'both') {
+    renderMenus(allMenus, currentOrder);
+  }
+  checkShowActions();
+}
+
 async function loadOrderPage() {
   editMode = false;
   selectedMenuId = null;
+  selectedBevId = null;
   document.getElementById('orderActions').style.display = 'none';
   document.getElementById('editActions').style.display = 'none';
 
   try {
-    const [rm, ro] = await Promise.all([
+    const [rm, rb, ro] = await Promise.all([
       apiFetch(`${API}/api/employee/menus`),
+      apiFetch(`${API}/api/employee/beverages`),
       apiFetch(`${API}/api/employee/order`)
     ]);
+    if (!rm || !rb || !ro) return;
+    [allMenus, allBevs, currentOrder] = await Promise.all([rm.json(), rb.json(), ro.json()]);
 
-    if (!rm || !ro) return;
-    const [menus, order] = await Promise.all([rm.json(), ro.json()]);
-    currentOrder = order;
-    renderMenus(menus, order);
-    renderOrderBanner(order);
-  } catch(e) {
-    toast('Erreur chargement', 'error');
-  }
+    if (currentOrder) {
+      orderType = currentOrder.order_type || 'food';
+      selectedMenuId = currentOrder.menu_id;
+      selectedBevId = currentOrder.beverage_id;
+      document.getElementById('orderTypeSection').style.display = 'none';
+    } else {
+      document.getElementById('orderTypeSection').style.display = 'block';
+      setOrderType('food');
+    }
+
+    renderMenus(allMenus, currentOrder);
+    renderBeverages(allBevs, currentOrder);
+    renderOrderBanner(currentOrder);
+    updateSections();
+  } catch(e) { toast('Erreur chargement', 'error'); }
 }
 
-function renderMenus(menus, currentOrder) {
+function updateSections() {
+  document.getElementById('foodSection').style.display = (orderType === 'food' || orderType === 'both') ? 'block' : 'none';
+  document.getElementById('drinkSection').style.display = (orderType === 'drink' || orderType === 'both') ? 'block' : 'none';
+}
+
+function renderMenus(menus, order) {
   const grid = document.getElementById('menusGrid');
   if (!menus.length) {
-    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><span class="icon">🍜</span>Aucun menu disponible aujourd\'hui.<br><small>Revenez plus tard ou contactez l\'administrateur.</small></div>';
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><span class="icon">🍜</span>Aucun plat disponible aujourd\'hui.</div>';
     return;
   }
-  const icons = ['🍜', '🥗', '🍛', '🥘', '🍲', '🫕', '🥩', '🍱', '🌮', '🥙'];
+  const foodIcons = ['🍜','🥗','🍛','🥘','🍲','🫕','🥩','🍱'];
   grid.innerHTML = menus.map((m, i) => {
-    const isSelected = currentOrder && currentOrder.menu_id === m.id;
-    const isDisabled = currentOrder && currentOrder.status === 'validated';
+    const isSel = selectedMenuId === m.id;
+    const isDisabled = order && order.status === 'validated';
     return `
-      <div class="menu-card${isSelected ? ' selected' : ''}${isDisabled && !isSelected ? ' disabled' : ''}"
-           onclick="selectMenu(${m.id}, this)" data-id="${m.id}">
-        <div class="menu-icon">${icons[i % icons.length]}</div>
-        <div class="menu-name">${m.name}</div>
-        ${m.description ? `<div class="menu-desc">${m.description}</div>` : ''}
-      </div>
-    `;
+      <div class="item-card${isSel?' selected':''}${isDisabled&&!isSel?' disabled':''}"
+           onclick="selectMenu(${m.id},this)" data-id="${m.id}">
+        ${m.image_url
+          ? `<img src="${m.image_url}" class="item-img" alt="${m.name}">`
+          : `<div class="item-img-placeholder">${foodIcons[i%foodIcons.length]}</div>`}
+        <div class="item-info">
+          <div class="item-name">${m.name}</div>
+          ${m.description ? `<div class="item-desc">${m.description}</div>` : ''}
+          <div class="item-meta">
+            ${m.price ? `<span class="item-price">💰 ${Number(m.price).toLocaleString('fr-FR')} FCFA</span>` : ''}
+            ${m.delivery_time ? `<span class="item-time">🕐 ${m.delivery_time}</span>` : ''}
+          </div>
+        </div>
+      </div>`;
   }).join('');
+}
 
-  if (currentOrder && !editMode) {
-    // Show current selection but don't allow changes until edit mode
-    const selectedCard = grid.querySelector(`[data-id="${currentOrder.menu_id}"]`);
-    if (selectedCard) selectedCard.classList.add('selected');
+function renderBeverages(bevs, order) {
+  const grid = document.getElementById('beveragesGrid');
+  if (!bevs.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><span class="icon">🥤</span>Aucune boisson disponible aujourd\'hui.</div>';
+    return;
   }
+  const bevIcons = ['🥤','☕','🍵','🧃','🍹','🧋','🍶','💧'];
+  grid.innerHTML = bevs.map((b, i) => {
+    const isSel = selectedBevId === b.id;
+    const isDisabled = order && order.status === 'validated';
+    return `
+      <div class="item-card${isSel?' selected':''}${isDisabled&&!isSel?' disabled':''}"
+           onclick="selectBev(${b.id},this)" data-id="${b.id}">
+        ${b.image_url
+          ? `<img src="${b.image_url}" class="item-img" alt="${b.name}">`
+          : `<div class="item-img-placeholder">${bevIcons[i%bevIcons.length]}</div>`}
+        <div class="item-info">
+          <div class="item-name">${b.name}</div>
+          ${b.description ? `<div class="item-desc">${b.description}</div>` : ''}
+          <div class="item-meta">
+            ${b.price ? `<span class="item-price">💰 ${Number(b.price).toLocaleString('fr-FR')} FCFA</span>` : ''}
+            ${b.delivery_time ? `<span class="item-time">🕐 ${b.delivery_time}</span>` : ''}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
 }
 
 function renderOrderBanner(order) {
   const banner = document.getElementById('currentOrderBanner');
   if (!order) { banner.style.display = 'none'; return; }
   banner.style.display = 'block';
+  const typeLabels = { food:'🍜 Plat', drink:'🥤 Boisson', both:'🍽️ Plat + Boisson' };
+  const content = [order.menu_name, order.beverage_name].filter(Boolean).join(' + ');
   banner.innerHTML = `
     <div class="order-banner">
-      <div>
-        <div class="ob-title">Votre commande du jour</div>
-        <div class="ob-menu">${order.menu_name}</div>
-        <div class="ob-meta"><span class="badge badge-${order.status}" style="font-size:11px">${order.status === 'validated' ? '✓ Validée' : '⏳ En attente'}</span></div>
+      <div style="flex:1">
+        <div class="ob-title">✅ Votre commande du ${new Date(order.order_date+'T12:00:00').toLocaleDateString('fr-FR')}</div>
+        <div class="ob-content">${content || 'Commande passée'}</div>
+        <div class="ob-meta">
+          ${typeLabels[order.order_type||'food']} •
+          <span style="background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:20px;font-size:11px">${order.status==='validated'?'✓ Validée':'⏳ En attente'}</span>
+          ${order.menu_price || order.beverage_price ? ` • 💰 Total: ${((Number(order.menu_price)||0)+(Number(order.beverage_price)||0)).toLocaleString('fr-FR')} FCFA` : ''}
+        </div>
       </div>
       ${order.status !== 'validated' ? `
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <button class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.4)" onclick="enterEditMode()">✏️ Modifier</button>
-        <button class="btn" style="background:rgba(220,38,38,0.8);color:white" onclick="deleteOrder()">🗑 Supprimer</button>
-      </div>` : '<div style="opacity:0.7;font-size:13px">Commande validée<br>par l\'admin</div>'}
-    </div>
-  `;
+      <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0">
+        <button class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.4);font-size:12px" onclick="enterEditMode()">✏️ Modifier</button>
+        <button class="btn" style="background:rgba(220,38,38,0.8);color:white;font-size:12px" onclick="deleteOrder()">🗑️ Supprimer</button>
+      </div>` : `<div style="opacity:0.7;font-size:12px;text-align:center">Commande<br>validée ✓</div>`}
+    </div>`;
 }
 
 function selectMenu(id, el) {
   if (!editMode && currentOrder) return;
   selectedMenuId = id;
-  document.querySelectorAll('.menu-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('#menusGrid .item-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
-  if (!currentOrder) {
-    document.getElementById('orderActions').style.display = 'flex';
-  } else if (editMode) {
-    document.getElementById('editActions').style.display = 'flex';
+  checkShowActions();
+}
+
+function selectBev(id, el) {
+  if (!editMode && currentOrder) return;
+  selectedBevId = id;
+  document.querySelectorAll('#beveragesGrid .item-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  checkShowActions();
+}
+
+function checkShowActions() {
+  if (editMode || !currentOrder) {
+    const foodOk = (orderType === 'drink') || (selectedMenuId !== null);
+    const drinkOk = (orderType === 'food') || (selectedBevId !== null);
+    const ready = foodOk && drinkOk;
+    if (currentOrder && editMode) {
+      document.getElementById('editActions').style.display = ready ? 'flex' : 'none';
+    } else if (!currentOrder) {
+      document.getElementById('orderActions').style.display = ready ? 'flex' : 'none';
+    }
   }
 }
 
 function enterEditMode() {
   editMode = true;
   document.getElementById('currentOrderBanner').style.display = 'none';
-  document.getElementById('editActions').style.display = 'none';
-  document.getElementById('orderActions').style.display = 'none';
+  document.getElementById('orderTypeSection').style.display = 'block';
+
   if (currentOrder) {
-    const card = document.querySelector(`[data-id="${currentOrder.menu_id}"]`);
-    if (card) { card.classList.add('selected'); selectedMenuId = currentOrder.menu_id; }
-    document.getElementById('editActions').style.display = 'flex';
+    orderType = currentOrder.order_type || 'food';
+    selectedMenuId = currentOrder.menu_id;
+    selectedBevId = currentOrder.beverage_id;
+    document.querySelectorAll('.order-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.type === orderType));
   }
-  toast('Mode modification activé — choisissez un nouveau menu', 'info');
+
+  updateSections();
+  renderMenus(allMenus, null);
+  renderBeverages(allBevs, null);
+
+  if (selectedMenuId) {
+    const el = document.querySelector(`#menusGrid [data-id="${selectedMenuId}"]`);
+    if (el) el.classList.add('selected');
+  }
+  if (selectedBevId) {
+    const el = document.querySelector(`#beveragesGrid [data-id="${selectedBevId}"]`);
+    if (el) el.classList.add('selected');
+  }
+  document.getElementById('editActions').style.display = 'flex';
+  toast('✏️ Mode modification — choisissez vos nouvelles options', 'info');
 }
 
-function cancelEdit() {
-  editMode = false;
-  loadOrderPage();
-}
+function cancelEdit() { editMode = false; loadOrderPage(); }
 
 async function submitOrder() {
-  if (!selectedMenuId) { toast('Veuillez choisir un menu', 'error'); return; }
+  if (orderType !== 'drink' && !selectedMenuId) { toast('Veuillez choisir un plat', 'error'); return; }
+  if (orderType !== 'food' && !selectedBevId) { toast('Veuillez choisir une boisson', 'error'); return; }
   try {
     const res = await apiFetch(`${API}/api/employee/order`, {
-      method: 'POST', body: JSON.stringify({ menuId: selectedMenuId })
+      method: 'POST',
+      body: JSON.stringify({ menuId: selectedMenuId, beverageId: selectedBevId, orderType })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
     toast('🎉 Commande enregistrée !', 'success');
     loadOrderPage();
-    loadProfile();
   } catch(e) { toast(e.message, 'error'); }
 }
 
 async function updateOrder() {
-  if (!selectedMenuId) { toast('Veuillez choisir un menu', 'error'); return; }
+  if (orderType !== 'drink' && !selectedMenuId) { toast('Choisissez un plat', 'error'); return; }
+  if (orderType !== 'food' && !selectedBevId) { toast('Choisissez une boisson', 'error'); return; }
   try {
     const res = await apiFetch(`${API}/api/employee/order/${currentOrder.id}`, {
-      method: 'PUT', body: JSON.stringify({ menuId: selectedMenuId })
+      method: 'PUT',
+      body: JSON.stringify({ menuId: selectedMenuId, beverageId: selectedBevId, orderType })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
     toast('✅ Commande modifiée !', 'success');
     loadOrderPage();
-    loadProfile();
   } catch(e) { toast(e.message, 'error'); }
 }
 
@@ -636,45 +679,184 @@ async function deleteOrder() {
   } catch(e) { toast(e.message, 'error'); }
 }
 
-// ══════ PREFERENCE PAGE ══════
-async function loadPreferencePage() {
-  await loadProfile();
-  updateGlobalDrinkUI();
-}
+// ══ RATINGS PAGE ══
+let ratingState = {};
 
-function selectGlobalDrink(drink) {
-  globalDrink = drink;
-  updateGlobalDrinkUI();
-}
-
-function updateGlobalDrinkUI() {
-  document.querySelectorAll('#page-preference .drink-card').forEach(c => c.classList.remove('selected'));
-  if (globalDrink) {
-    const el = document.querySelector(`#page-preference [data-drink="${globalDrink}"]`);
-    if (el) el.classList.add('selected');
-    const labels = { lipton:'🍵 Lipton', nescafe:'☕ Nescafé', both:'🍵☕ Les deux' };
-    document.getElementById('currentPrefLabel').textContent = `Préférence actuelle : ${labels[globalDrink] || '—'}`;
-  } else {
-    document.getElementById('currentPrefLabel').textContent = 'Aucune préférence enregistrée';
-  }
-}
-
-async function saveGlobalPreference() {
-  if (!globalDrink) { toast('Choisissez une préférence', 'error'); return; }
+async function loadRatingsPage() {
+  ratingState = {};
   try {
-    const res = await apiFetch(`${API}/api/employee/preference`, {
-      method: 'PUT', body: JSON.stringify({ drinkPreference: globalDrink })
+    const [rRatable, rMyRatings] = await Promise.all([
+      apiFetch(`${API}/api/employee/orders/ratable`),
+      apiFetch(`${API}/api/employee/ratings`)
+    ]);
+    if (!rRatable || !rMyRatings) return;
+    const [orders, myRatings] = await Promise.all([rRatable.json(), rMyRatings.json()]);
+
+    const ratingMap = {};
+    myRatings.forEach(r => { ratingMap[r.order_id] = r; });
+
+    const container = document.getElementById('ratingsContainer');
+    if (!orders.length) {
+      container.innerHTML = '<div class="empty-state"><span class="icon">⭐</span>Aucune commande validée à noter pour l\'instant.</div>';
+      return;
+    }
+
+    container.innerHTML = orders.map(o => {
+      const existing = ratingMap[o.id];
+      const dateStr = new Date(o.order_date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday:'long', day:'2-digit', month:'long' });
+      const rated = !!existing;
+
+      return `<div class="rating-card ${rated ? 'rated' : ''}" id="rcard-${o.id}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--brown)">${dateStr}</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">
+              ${o.menu_name ? `🍜 ${o.menu_name}` : ''}${o.menu_name && o.beverage_name ? ' &bull; ' : ''}${o.beverage_name ? `🥤 ${o.beverage_name}` : ''}
+            </div>
+          </div>
+          ${rated ? '<span style="background:#D1FAE5;color:#065F46;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600">✓ Noté</span>' : ''}
+        </div>
+
+        ${o.menu_name ? `
+        <div style="margin-bottom:14px">
+          <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px">🍜 Note pour le plat "${o.menu_name}"</div>
+          <div class="star-rating" id="foodStars-${o.id}">
+            ${[1,2,3,4,5].map(n => `<button class="star-btn${existing&&existing.food_rating>=n?' active':''}" onclick="setStars('food',${o.id},${n})" data-n="${n}">★</button>`).join('')}
+          </div>
+          <textarea id="foodComment-${o.id}" placeholder="Votre avis sur ce plat (optionnel)..." style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13px;resize:vertical;min-height:70px;outline:none;margin-top:8px">${existing ? existing.food_comment||'' : ''}</textarea>
+        </div>` : ''}
+
+        ${o.beverage_name ? `
+        <div style="margin-bottom:14px">
+          <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px">🥤 Note pour "${o.beverage_name}"</div>
+          <div class="star-rating" id="drinkStars-${o.id}">
+            ${[1,2,3,4,5].map(n => `<button class="star-btn${existing&&existing.drink_rating>=n?' active':''}" onclick="setStars('drink',${o.id},${n})" data-n="${n}">★</button>`).join('')}
+          </div>
+          <textarea id="drinkComment-${o.id}" placeholder="Votre avis sur cette boisson (optionnel)..." style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13px;resize:vertical;min-height:70px;outline:none;margin-top:8px">${existing ? existing.drink_comment||'' : ''}</textarea>
+        </div>` : ''}
+
+        <button class="btn btn-primary btn-sm" onclick="submitRating(${o.id},${o.menu_id||'null'},${o.beverage_id||'null'})">
+          ${rated ? '✏️ Modifier l\'avis' : '⭐ Soumettre l\'avis'}
+        </button>
+      </div>`;
+    }).join('');
+
+    orders.forEach(o => {
+      const existing = ratingMap[o.id];
+      if (existing) {
+        ratingState[`food-${o.id}`] = existing.food_rating;
+        ratingState[`drink-${o.id}`] = existing.drink_rating;
+      }
     });
-    if (!res.ok) throw new Error('Erreur');
-    toast('Préférence enregistrée !', 'success');
-  } catch(e) { toast('Erreur sauvegarde', 'error'); }
+  } catch(e) { toast('Erreur avis', 'error'); }
 }
 
-// ══════ CHANGE PASSWORD ══════
+function setStars(type, orderId, n) {
+  ratingState[`${type}-${orderId}`] = n;
+  const container = document.getElementById(`${type}Stars-${orderId}`);
+  container.querySelectorAll('.star-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.n) <= n);
+  });
+}
+
+async function submitRating(orderId, menuId, beverageId) {
+  const foodRating = ratingState[`food-${orderId}`] || null;
+  const drinkRating = ratingState[`drink-${orderId}`] || null;
+  const foodComment = document.getElementById(`foodComment-${orderId}`)?.value || '';
+  const drinkComment = document.getElementById(`drinkComment-${orderId}`)?.value || '';
+
+  if (!foodRating && menuId && !drinkRating && beverageId) {
+    toast('Veuillez donner au moins une note', 'error'); return;
+  }
+  try {
+    const res = await apiFetch(`${API}/api/employee/ratings`, {
+      method: 'POST',
+      body: JSON.stringify({ orderId, menuId, beverageId, foodRating, foodComment, drinkRating, drinkComment })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    toast('⭐ Avis enregistré ! Merci pour votre retour.', 'success');
+    loadRatingsPage();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+// ══ HISTORY ══
+async function loadHistory() {
+  try {
+    const rh = await apiFetch(`${API}/api/employee/history`);
+    if (!rh) return;
+    const history = await rh.json();
+    const tbody = document.getElementById('histTableBody');
+    if (!history.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><span class="icon">📅</span>Aucun historique</div></td></tr>'; return; }
+    const aL = { created:'➕ Commandé', updated:'✏️ Modifié', deleted:'🗑️ Supprimé', validated:'✅ Validé' };
+    const aBg = { created:'#D1FAE5', updated:'#DBEAFE', deleted:'#FEE2E2', validated:'#D1FAE5' };
+    const aTx = { created:'#065F46', updated:'#1E40AF', deleted:'#991B1B', validated:'#065F46' };
+    const tL = { food:'🍜 Plat', drink:'🥤 Boisson', both:'🍽️ Les deux' };
+    tbody.innerHTML = history.map(h => {
+      const date = new Date(h.order_date+'T12:00:00').toLocaleDateString('fr-FR', { weekday:'short', day:'2-digit', month:'short' });
+      const ts = new Date(h.action_timestamp).toLocaleString('fr-FR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+      return `<tr>
+        <td style="font-size:12px">${h.menu_name||'—'}</td>
+        <td style="font-size:12px">${h.beverage_name||'—'}</td>
+        <td><span style="font-size:11px">${tL[h.order_type]||h.order_type||'—'}</span></td>
+        <td style="font-size:12px">${date}</td>
+        <td><span style="background:${aBg[h.action]||'#F3F4F6'};color:${aTx[h.action]||'#374151'};padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600">${aL[h.action]||h.action}</span></td>
+        <td style="font-size:10px;color:var(--muted)">${ts}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteHistEntry(${h.id})">🗑️</button></td>
+      </tr>`;
+    }).join('');
+  } catch(e) { toast('Erreur historique', 'error'); }
+}
+
+async function deleteHistEntry(id) {
+  if (!confirm('Supprimer cette entrée ?')) return;
+  await apiFetch(`${API}/api/employee/history/${id}`, { method:'DELETE' });
+  toast('Entrée supprimée', 'success'); loadHistory();
+}
+
+async function clearHistory() {
+  if (!confirm('Vider tout l\'historique ?')) return;
+  await apiFetch(`${API}/api/employee/history`, { method:'DELETE' });
+  toast('Historique vidé', 'success'); loadHistory();
+}
+
+// ══ PROFILE ══
+async function loadProfile() {
+  try {
+    const r = await apiFetch(`${API}/api/employee/profile`);
+    if (!r) return;
+    profile = await r.json();
+    if (!profile) return;
+    document.getElementById('profPhone').value = profile.phone_number || '';
+    document.getElementById('profCompany').value = profile.company_name || '';
+    document.getElementById('profCompanyType').value = profile.company_type || '';
+    document.getElementById('profileInfo').innerHTML = `
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px">
+        <span style="color:var(--muted)">👤 Nom</span><strong>${profile.first_name} ${profile.last_name}</strong>
+        <span style="color:var(--muted)">🪪 ID</span><code style="background:#F0E6DE;padding:1px 6px;border-radius:5px;font-size:12px">${profile.employee_id}</code>
+        <span style="color:var(--muted)">📧 Email</span><span>${profile.email}</span>
+        <span style="color:var(--muted)">📅 Inscrit</span><span>${new Date(profile.created_at).toLocaleDateString('fr-FR')}</span>
+      </div>
+    `;
+    resetPasswordForm();
+  } catch(e) { toast('Erreur profil', 'error'); }
+}
+
+async function saveProfile() {
+  try {
+    const res = await apiFetch(`${API}/api/employee/profile`, { method:'PUT', body: JSON.stringify({
+      phoneNumber: document.getElementById('profPhone').value.trim(),
+      companyName: document.getElementById('profCompany').value.trim(),
+      companyType: document.getElementById('profCompanyType').value
+    })});
+    if (!res.ok) throw new Error((await res.json()).error);
+    toast('✅ Profil mis à jour !', 'success');
+    loadProfileQuiet();
+  } catch(e) { toast(e.message, 'error'); }
+}
+
 function resetPasswordForm() {
-  document.getElementById('currentPassword').value = '';
-  document.getElementById('newPassword').value = '';
-  document.getElementById('confirmPassword').value = '';
+  ['currentPassword','newPassword','confirmPassword'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('pwdError').style.display = 'none';
 }
 
@@ -684,70 +866,16 @@ async function changePassword() {
   const confirm = document.getElementById('confirmPassword').value;
   const errEl = document.getElementById('pwdError');
   errEl.style.display = 'none';
-
   if (!current || !newPwd || !confirm) { errEl.textContent = 'Veuillez remplir tous les champs'; errEl.style.display = 'block'; return; }
-  if (newPwd.length < 6) { errEl.textContent = 'Le nouveau mot de passe doit contenir au moins 6 caractères'; errEl.style.display = 'block'; return; }
-  if (newPwd !== confirm) { errEl.textContent = 'Les nouveaux mots de passe ne correspondent pas'; errEl.style.display = 'block'; return; }
-
+  if (newPwd.length < 6) { errEl.textContent = 'Minimum 6 caractères'; errEl.style.display = 'block'; return; }
+  if (newPwd !== confirm) { errEl.textContent = 'Les mots de passe ne correspondent pas'; errEl.style.display = 'block'; return; }
   try {
-    const res = await apiFetch(`${API}/api/employee/change-password`, {
-      method: 'PUT', body: JSON.stringify({ currentPassword: current, newPassword: newPwd })
-    });
+    const res = await apiFetch(`${API}/api/employee/change-password`, { method:'PUT', body: JSON.stringify({ currentPassword: current, newPassword: newPwd }) });
     const data = await res.json();
     if (!res.ok) { errEl.textContent = data.error || 'Erreur'; errEl.style.display = 'block'; return; }
-    toast('✅ Mot de passe modifié avec succès !', 'success');
+    toast('✅ Mot de passe modifié !', 'success');
     resetPasswordForm();
   } catch(e) { errEl.textContent = 'Erreur réseau'; errEl.style.display = 'block'; }
-}
-
-// ══════ HISTORY ══════
-async function loadHistory() {
-  try {
-    const rh = await apiFetch(`${API}/api/employee/history`);
-    if (!rh) return;
-    const history = await rh.json();
-    const tbody = document.getElementById('histTableBody');
-    if (!history.length) {
-      tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><span class="icon">📅</span>Aucun historique de commande</div></td></tr>';
-      return;
-    }
-    const actionLabels = { created:'➕ Commandé', updated:'✏️ Modifié', deleted:'🗑 Supprimé', validated:'✅ Validé' };
-    const actionColors = { created:'#D1FAE5', updated:'#DBEAFE', deleted:'#FEE2E2', validated:'#D1FAE5' };
-    const actionTextColors = { created:'#065F46', updated:'#1E40AF', deleted:'#991B1B', validated:'#065F46' };
-    tbody.innerHTML = history.map(h => {
-      const drinkLabel = { lipton:'🍵 Lipton', nescafe:'☕ Nescafé', both:'🍵☕ Les deux' }[h.drink_preference] || '—';
-      const date = new Date(h.order_date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday:'short', day:'2-digit', month:'short', year:'numeric' });
-      const ts = new Date(h.action_timestamp).toLocaleString('fr-FR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
-      const aBg = actionColors[h.action] || '#F3F4F6';
-      const aTxt = actionTextColors[h.action] || '#374151';
-      return `<tr>
-        <td><strong>${h.menu_name || '—'}</strong></td>
-        <td style="font-size:13px">${date}</td>
-        <td style="font-size:13px">${drinkLabel}</td>
-        <td><span style="background:${aBg};color:${aTxt};padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600">${actionLabels[h.action] || h.action}</span></td>
-        <td style="font-size:11px;color:var(--muted)">${ts}</td>
-        <td><button class="btn btn-danger btn-sm" onclick="deleteHistoryEntry(${h.id})">🗑</button></td>
-      </tr>`;
-    }).join('');
-  } catch(e) { toast('Erreur historique', 'error'); }
-}
-
-async function deleteHistoryEntry(id) {
-  if (!confirm('Supprimer cette entrée ?')) return;
-  try {
-    await apiFetch(`${API}/api/employee/history/${id}`, { method:'DELETE' });
-    toast('Entrée supprimée', 'success');
-    loadHistory();
-  } catch(e) { toast('Erreur', 'error'); }
-}
-
-async function clearHistory() {
-  if (!confirm('Vider tout votre historique ? Cette action est irréversible.')) return;
-  try {
-    await apiFetch(`${API}/api/employee/history`, { method:'DELETE' });
-    toast('Historique vidé', 'success');
-    loadHistory();
-  } catch(e) { toast('Erreur', 'error'); }
 }
 
 // INIT
